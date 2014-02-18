@@ -7,15 +7,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 import net.minecraft.block.Block;
 
-public class ModBLocks {
+public class ModBlocks {
 
 	public static Block VirtualChest;
 	
 	public static void InitBlocks()
 	{
-		VirtualChest=new VirtualInventoryBlock(Configs.VirtualChestId);
-		
-		
+		VirtualChest=new VirtualInventoryBlock(Configs.VirtualChestId).setUnlocalizedName(LibBlockNames.VIRTUAL_CHEST);
 		
 		
 		

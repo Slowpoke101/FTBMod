@@ -8,7 +8,7 @@ public class VirtualInventoryBlock extends Block {
 
 	public VirtualInventoryBlock(int par1) {
 		super(par1, Material.iron);
-		this.setCreativeTab(CreativeTabs.tabDecorations);
+		this.setCreativeTab(CreativeTabs.tabRedstone);
 	}
 
 }
