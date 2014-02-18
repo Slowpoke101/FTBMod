@@ -1,6 +1,7 @@
 package com.feedthebeast.VirtualChest.blocks.tile;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -25,17 +26,20 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 
 	public TileEntityVirtualInventory()
 	{
+		currentPlayer="";
 		currentInventory=new ChestInventory(inventorySize, this);
 	}
 	
 	
 	public void SetPlayer(String player)
 	{
+		currentPlayer=player;
 		currentInventory=(ChestInventory) GetPlayer(player);
 	}
 	@LuaCallable( description="Setting current player inventory")
 	public void setPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
 	{
+		currentPlayer=player;
 		currentInventory=(ChestInventory) GetPlayer(player);
 	}
 	
@@ -57,6 +61,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		}
 	}
 	public int inventorySize=36;
+	public String currentPlayer="";
 	private HashMap<String,  ChestInventory> inventories=new HashMap<String, ChestInventory>();
 	private ChestInventory currentInventory;
 	
@@ -141,6 +146,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	public static String TAG_INVENTORIES="Inventories";
 	public static String TAG_INVENTORYNAME="InventoryName";
 	public static String TAG_INVENTORY="Inventory";
+	public static String TAG_CURRENT="CurrentInventory";
 	@Override
 	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
 		super.readFromNBT(par1nbtTagCompound);
@@ -151,8 +157,10 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
             String name=nbttagcompound1.getString(TAG_INVENTORYNAME);
             ChestInventory inv=new ChestInventory(inventorySize, this);
             inv.readFromNBT(nbttagcompound1.getCompoundTag(TAG_INVENTORY));
+            inventories.put(name, inv);
         }
-		
+		currentPlayer=par1nbtTagCompound.getString(TAG_CURRENT);
+		currentInventory=(ChestInventory) GetPlayer(currentPlayer);
 	}
 
 
@@ -161,18 +169,18 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		super.writeToNBT(par1nbtTagCompound);
 		NBTTagList nbttaglist = new NBTTagList();
 		Set<Entry<String,ChestInventory>> entries=inventories.entrySet();
-		for(int i=0;i<inventories.size();i++)
-		{
+		for(String playerName:inventories.keySet())
+        {
 			NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-			String player=((Entry<String,ChestInventory>)entries.toArray()[0]).getKey();
-			nbttagcompound1.setString(TAG_INVENTORYNAME, player);
-			ChestInventory inv=inventories.get(player);
+			nbttagcompound1.setString(TAG_INVENTORYNAME, playerName);
+			ChestInventory inv=inventories.get(playerName);
 			NBTTagCompound inventory=new NBTTagCompound();
 			inv.writeToNBT(inventory);
 			nbttagcompound1.setCompoundTag(TAG_INVENTORY, inventory);
 			nbttaglist.appendTag(nbttagcompound1);
 		}
-		par1nbtTagCompound.setCompoundTag(TAG_INVENTORIES, par1nbtTagCompound);
+		par1nbtTagCompound.setTag(TAG_INVENTORIES, nbttaglist);
+		par1nbtTagCompound.setString(TAG_CURRENT, currentPlayer);
 	}
 
 }
