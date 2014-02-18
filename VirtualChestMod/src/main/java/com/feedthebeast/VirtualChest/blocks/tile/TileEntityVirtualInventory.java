@@ -1,15 +1,18 @@
 package com.feedthebeast.VirtualChest.blocks.tile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import openperipheral.api.Arg;
+import openperipheral.api.IAttachable;
 import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaType;
 
 import com.feedthebeast.VirtualChest.core.ChestInventory;
+import com.google.common.collect.Lists;
 
 import dan200.computer.api.IComputerAccess;
 import dan200.computer.api.ILuaContext;
@@ -22,12 +25,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityVirtualInventory extends TileEntity implements IInventory{
-
+public class TileEntityVirtualInventory extends TileEntity implements IInventory,IAttachable{
+	private static final String EVENT_INVENTORY_CHANGED = "inventory_changed";
+	private List<IComputerAccess> computers = Lists.newArrayList();
 	public TileEntityVirtualInventory()
 	{
 		currentPlayer="";
-		currentInventory=new ChestInventory(inventorySize, this);
+		currentInventory=new ChestInventory(inventorySize, this,"");
 	}
 	
 	
@@ -43,6 +47,14 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		currentInventory=(ChestInventory) GetPlayer(player);
 	}
 	
+	public void onInventoryChanged(ChestInventory inv) {
+		super.onInventoryChanged();
+		for (IComputerAccess computer : computers) {
+			computer.queueEvent(EVENT_INVENTORY_CHANGED, new Object[]{inv.PlayerName});
+		}
+	}
+
+
 	public IInventory getCurrentInventory()
 	{
 		return currentInventory;
@@ -55,7 +67,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		}
 		else
 		{
-			IInventory inv=new ChestInventory(inventorySize,this);
+			IInventory inv=new ChestInventory(inventorySize,this,player);
 			inventories.put(player, (ChestInventory) inv);
 			return inv;
 		}
@@ -155,7 +167,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
         {
             NBTTagCompound nbttagcompound1 = (NBTTagCompound)list.tagAt(i);
             String name=nbttagcompound1.getString(TAG_INVENTORYNAME);
-            ChestInventory inv=new ChestInventory(inventorySize, this);
+            ChestInventory inv=new ChestInventory(inventorySize, this,name);
             inv.readFromNBT(nbttagcompound1.getCompoundTag(TAG_INVENTORY));
             inventories.put(name, inv);
         }
@@ -181,6 +193,22 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		}
 		par1nbtTagCompound.setTag(TAG_INVENTORIES, nbttaglist);
 		par1nbtTagCompound.setString(TAG_CURRENT, currentPlayer);
+	}
+
+
+	@Override
+	public void addComputer(IComputerAccess computer) {
+		if (!computers.contains(computer)) {
+			computers.add(computer);
+		}
+		
+	}
+
+
+	@Override
+	public void removeComputer(IComputerAccess computer) {
+		computers.remove(computer);
+		
 	}
 
 }

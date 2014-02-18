@@ -30,7 +30,7 @@ public class VirtualInventoryBlock extends BlockContainer {
         else
         {
         	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
-        	inv.SetPlayer(par5EntityPlayer.username);
+        	//inv.SetPlayer(par5EntityPlayer.username);
             IInventory iinventory = inv.GetPlayer(par5EntityPlayer.username);
 
             if (this.canGetInventory(par1World, par2, par3, par4))

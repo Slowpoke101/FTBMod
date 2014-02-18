@@ -12,11 +12,13 @@ import net.minecraft.tileentity.TileEntity;
 public class ChestInventory implements IInventory {
 	private ItemStack[] chestContents;
 	public int size;
-	public TileEntity parent;
-	public ChestInventory(int size,TileEntity parent)
+	public TileEntityVirtualInventory parent;
+	public String PlayerName;
+	public ChestInventory(int size,TileEntity parent,String Name)
 	{
 		this.size=size;
-		this.parent=parent;
+		this.parent=(TileEntityVirtualInventory) parent;
+		this.PlayerName=Name;
 		chestContents=new ItemStack[size];
 	}
 	
@@ -40,7 +42,7 @@ public class ChestInventory implements IInventory {
             {
                 itemstack = this.chestContents[par1];
                 this.chestContents[par1] = null;
-                parent.onInventoryChanged();
+                parent.onInventoryChanged(this);
                 return itemstack;
             }
             else
@@ -52,7 +54,7 @@ public class ChestInventory implements IInventory {
                     this.chestContents[par1] = null;
                 }
 
-                parent.onInventoryChanged();
+                parent.onInventoryChanged(this);
                 return itemstack;
             }
         }
@@ -85,7 +87,7 @@ public class ChestInventory implements IInventory {
 	            par2ItemStack.stackSize = this.getInventoryStackLimit();
 	        }
 
-	        parent.onInventoryChanged();
+	        parent.onInventoryChanged(this);
 
 	}
 
@@ -143,6 +145,7 @@ public class ChestInventory implements IInventory {
                 this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
+        this.PlayerName=par1nbtTagCompound.getString("PlayerName");
 	}
 
 
@@ -161,5 +164,6 @@ public class ChestInventory implements IInventory {
         }
 
         par1nbtTagCompound.setTag("Items", nbttaglist);
+        par1nbtTagCompound.setString("PlayerName",this.PlayerName);
 	}
 }
