@@ -11,7 +11,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.ForgeSubscribe;
 
 import com.feedthebeast.VirtualChest.blocks.ModBlocks;
-import com.feedthebeast.VirtualChest.core.QuickTest;
+
 import com.feedthebeast.VirtualChest.lib.LibMisc;
 
 import cpw.mods.fml.common.FMLLog;
@@ -42,20 +42,16 @@ public class VirtualChestMod {
 				event.getSuggestedConfigurationFile());
 		Configs.load(config);
 		ModBlocks.InitBlocks();
-		WorldChunkManager.allowedBiomes.clear();
-		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
-		MinecraftForge.EVENT_BUS.register(new QuickTest());
+
 	}
 	
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		WorldChunkManager.allowedBiomes.clear();
-		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
+
 	}
 	
 	public void Init(FMLInitializationEvent event)
 	{
-		WorldChunkManager.allowedBiomes.clear();
-		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
+
 	}
 }

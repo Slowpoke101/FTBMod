@@ -1,17 +1,17 @@
-package com.feedthebeast.VirtualChest.blocks.tile;
-
-import java.util.HashMap;
+package com.feedthebeast.VirtualChest.core;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityVirtualInventory extends TileEntity implements IInventory{
+public class ChestInventory implements IInventory {
 
+	public int size;
 	
-	public int inventorySize=36;
-	private HashMap<String,  IInventory> inventories=new HashMap<String, IInventory>();
+	public ChestInventory(int size)
+	{
+		this.size=size;
+	}
 	@Override
 	public int getSizeInventory() {
 		// TODO Auto-generated method stub
@@ -39,7 +39,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -61,6 +61,12 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	}
 
 	@Override
+	public void onInventoryChanged() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		// TODO Auto-generated method stub
 		return false;
@@ -69,13 +75,13 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	@Override
 	public void openChest() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void closeChest() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
