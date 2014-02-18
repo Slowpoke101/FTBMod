@@ -30,8 +30,6 @@ public class PacketTeam extends PacketME
 		
 		this.teamID = teamID;
 		this.playerName = playerName;
-		
-		System.out.println("Created Packet");
 	}
 	
 	@Override
@@ -39,7 +37,6 @@ public class PacketTeam extends PacketME
 	{
 		data.writeUTF(playerName);
 		data.writeInt(teamID);
-		System.out.println("Writing Data");
 	}
 
 	@Override
@@ -47,14 +44,12 @@ public class PacketTeam extends PacketME
 	{
 		this.playerName = data.readUTF();
 		this.teamID = data.readInt();
-		System.out.println("Reading Data"+playerName);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void execute(INetworkManager manager, Player player)
 	{
-		System.out.println("Executed Packet: "+teamID);
 		ClientTeamHandler.teamCache.put(playerName, teamID);
 	}
 
