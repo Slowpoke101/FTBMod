@@ -2,6 +2,8 @@ package com.feedthebeast.VirtualChest.blocks.tile;
 
 import java.util.HashMap;
 
+import com.feedthebeast.VirtualChest.core.ChestInventory;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -9,79 +11,88 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityVirtualInventory extends TileEntity implements IInventory{
 
-	
+	public TileEntityVirtualInventory()
+	{
+		
+	}
+	public void SetPlayer(String player)
+	{
+		if(inventories.containsKey(player))
+		{
+			currentInventory=inventories.get(player);
+			return;
+		}
+		else
+		{
+			currentInventory=new ChestInventory(inventorySize);
+			inventories.put(player, currentInventory);
+			return;
+		}
+	}
 	public int inventorySize=36;
-	private HashMap<String,  IInventory> inventories=new HashMap<String, IInventory>();
+	private HashMap<String,  ChestInventory> inventories=new HashMap<String, ChestInventory>();
+	private ChestInventory currentInventory;
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		return currentInventory.getSizeInventory();
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		return currentInventory.getStackInSlot(i);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+		return currentInventory.decrStackSize(i, j);
 	}
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		return currentInventory.getStackInSlotOnClosing(i);
 	}
 
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
+		currentInventory.setInventorySlotContents(i, itemstack);
 		
 	}
 
 	@Override
 	public String getInvName() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentInventory.getInvName();
 	}
 
 	@Override
 	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
-		return false;
+		return currentInventory.isInvNameLocalized();
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		return currentInventory.getInventoryStackLimit();
 	}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		// TODO Auto-generated method stub
-		return false;
+		return currentInventory.isUseableByPlayer(entityplayer);
 	}
 
 	@Override
 	public void openChest() {
-		// TODO Auto-generated method stub
+		currentInventory.openChest();
 		
 	}
 
 	@Override
 	public void closeChest() {
-		// TODO Auto-generated method stub
+		currentInventory.closeChest();
 		
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return false;
+		return currentInventory.isItemValidForSlot(i, itemstack);
 	}
 
 }

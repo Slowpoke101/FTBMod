@@ -1,6 +1,9 @@
 package com.feedthebeast.VirtualChest.blocks;
 
 import static net.minecraftforge.common.ForgeDirection.DOWN;
+
+import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -26,6 +29,8 @@ public class VirtualInventoryBlock extends BlockContainer {
         }
         else
         {
+        	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
+        	inv.SetPlayer(par5EntityPlayer.username);
             IInventory iinventory = this.getInventory(par1World, par2, par3, par4);
 
             if (iinventory != null)
@@ -40,7 +45,7 @@ public class VirtualInventoryBlock extends BlockContainer {
 	
 	public IInventory getInventory(World par1World, int par2, int par3, int par4)
     {
-        Object object = (TileEntityChest)par1World.getBlockTileEntity(par2, par3, par4);
+        Object object = (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (object == null)
         {
@@ -75,7 +80,7 @@ public class VirtualInventoryBlock extends BlockContainer {
     }
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		return new TileEntityChest();
+		return new TileEntityVirtualInventory();
 	}
 
 }

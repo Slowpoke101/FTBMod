@@ -43,13 +43,16 @@ public class VirtualChestMod {
 		Configs.load(config);
 		ModBlocks.InitBlocks();
 
+		
 	}
 	
+	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
 
 	}
 	
+	@EventHandler
 	public void Init(FMLInitializationEvent event)
 	{
 

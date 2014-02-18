@@ -5,59 +5,97 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 public class ChestInventory implements IInventory {
-
+	private ItemStack[] chestContents;
 	public int size;
 	
 	public ChestInventory(int size)
 	{
 		this.size=size;
+		chestContents=new ItemStack[size];
 	}
+	
 	@Override
 	public int getSizeInventory() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.chestContents[i];
 	}
 
 	@Override
-	public ItemStack decrStackSize(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
+	public ItemStack decrStackSize(int par1, int par2) {
+		if (this.chestContents[par1] != null)
+        {
+            ItemStack itemstack;
+
+            if (this.chestContents[par1].stackSize <= par2)
+            {
+                itemstack = this.chestContents[par1];
+                this.chestContents[par1] = null;
+                this.onInventoryChanged();
+                return itemstack;
+            }
+            else
+            {
+                itemstack = this.chestContents[par1].splitStack(par2);
+
+                if (this.chestContents[par1].stackSize == 0)
+                {
+                    this.chestContents[par1] = null;
+                }
+
+                this.onInventoryChanged();
+                return itemstack;
+            }
+        }
+        else
+        {
+            return null;
+        }
 	}
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.chestContents[i] != null)
+        {
+            ItemStack itemstack = this.chestContents[i];
+            this.chestContents[i] = null;
+            return itemstack;
+        }
+        else
+        {
+            return null;
+        }
 	}
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
+	public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
+		 this.chestContents[par1] = par2ItemStack;
+
+	        if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit())
+	        {
+	            par2ItemStack.stackSize = this.getInventoryStackLimit();
+	        }
+
+	        this.onInventoryChanged();
 
 	}
 
 	@Override
 	public String getInvName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "container.chest";
 	}
 
 	@Override
 	public boolean isInvNameLocalized() {
-		// TODO Auto-generated method stub
-		return false;
+		 return false;
 	}
 
 	@Override
 	public int getInventoryStackLimit() {
-		// TODO Auto-generated method stub
-		return 0;
+		 return 64;
 	}
 
 	@Override
@@ -68,26 +106,22 @@ public class ChestInventory implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public void openChest() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void closeChest() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }

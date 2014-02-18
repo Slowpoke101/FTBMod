@@ -1,6 +1,7 @@
 package com.feedthebeast.VirtualChest.blocks;
 
 import com.feedthebeast.VirtualChest.Configs;
+import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
 import com.feedthebeast.VirtualChest.lib.LibBlockNames;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -28,6 +29,6 @@ public class ModBlocks {
 	
 	public static void InitTileEntities()
 	{
-		
+		GameRegistry.registerTileEntity(TileEntityVirtualInventory.class, LibBlockNames.VIRTUAL_CHEST);
 	}
 }
