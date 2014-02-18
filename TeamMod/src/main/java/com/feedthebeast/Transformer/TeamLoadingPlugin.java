@@ -31,7 +31,6 @@ public class TeamLoadingPlugin implements IFMLLoadingPlugin
 
 	}
 
-	@Override
 	@Deprecated
 	public String[] getLibraryRequestClass()
 	{
