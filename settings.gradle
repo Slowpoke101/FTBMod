@@ -1,0 +1,2 @@
+include 'MonumentMod','VirtualChestMod'
+rootProject.name = 'FTBMods'
