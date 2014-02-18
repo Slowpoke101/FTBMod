@@ -20,3 +20,5 @@ out/
 .classpath/
 .project/
 bin/
+client/
+Server/
