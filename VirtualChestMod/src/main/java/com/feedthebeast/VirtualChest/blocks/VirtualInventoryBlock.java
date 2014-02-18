@@ -31,9 +31,9 @@ public class VirtualInventoryBlock extends BlockContainer {
         {
         	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
         	inv.SetPlayer(par5EntityPlayer.username);
-            IInventory iinventory = this.getInventory(par1World, par2, par3, par4);
+            IInventory iinventory = inv.GetPlayer(par5EntityPlayer.username);
 
-            if (iinventory != null)
+            if (this.canGetInventory(par1World, par2, par3, par4))
             {
                 par5EntityPlayer.displayGUIChest(iinventory);
             }
@@ -43,39 +43,39 @@ public class VirtualInventoryBlock extends BlockContainer {
     }
 	
 	
-	public IInventory getInventory(World par1World, int par2, int par3, int par4)
+	public boolean canGetInventory(World par1World, int par2, int par3, int par4)
     {
         Object object = (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
 
         if (object == null)
         {
-            return null;
+            return false;
         }
         else if (par1World.isBlockSolidOnSide(par2, par3 + 1, par4, DOWN))
         {
-            return null;
+            return false;
         }
         else if (par1World.getBlockId(par2 - 1, par3, par4) == this.blockID && (par1World.isBlockSolidOnSide(par2 - 1, par3 + 1, par4, DOWN) ))
         {
-            return null;
+            return false;
         }
         else if (par1World.getBlockId(par2 + 1, par3, par4) == this.blockID && (par1World.isBlockSolidOnSide(par2 + 1, par3 + 1, par4, DOWN) ))
         {
-            return null;
+            return false;
         }
         else if (par1World.getBlockId(par2, par3, par4 - 1) == this.blockID && (par1World.isBlockSolidOnSide(par2, par3 + 1, par4 - 1, DOWN)))
         {
-            return null;
+            return false;
         }
         else if (par1World.getBlockId(par2, par3, par4 + 1) == this.blockID && (par1World.isBlockSolidOnSide(par2, par3 + 1, par4 + 1, DOWN) ))
         {
-            return null;
+            return false;
         }
         else
         {
             
 
-            return (IInventory)object;
+            return true;
         }
     }
 	@Override

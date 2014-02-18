@@ -17,21 +17,24 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	}
 	public void SetPlayer(String player)
 	{
-		if(inventories.containsKey(player))
-		{
-			currentInventory=inventories.get(player);
-			return;
-		}
-		else
-		{
-			currentInventory=new ChestInventory(inventorySize,this);
-			inventories.put(player, currentInventory);
-			return;
-		}
+		currentInventory=(ChestInventory) GetPlayer(player);
 	}
 	public IInventory getCurrentInventory()
 	{
 		return currentInventory;
+	}
+	public IInventory GetPlayer(String player)
+	{
+		if(inventories.containsKey(player))
+		{
+			return inventories.get(player);
+		}
+		else
+		{
+			IInventory inv=new ChestInventory(inventorySize,this);
+			inventories.put(player, (ChestInventory) inv);
+			return inv;
+		}
 	}
 	public int inventorySize=36;
 	private HashMap<String,  ChestInventory> inventories=new HashMap<String, ChestInventory>();
@@ -84,13 +87,11 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 
 	@Override
 	public void openChest() {
-		currentInventory.openChest();
 		
 	}
 
 	@Override
 	public void closeChest() {
-		currentInventory.closeChest();
 		
 	}
 

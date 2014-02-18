@@ -10,11 +10,12 @@ import net.minecraft.block.Block;
 
 public class ModBlocks {
 
+	public static Block VirtualStorage;
 	public static Block VirtualChest;
-	
 	public static void InitBlocks()
 	{
-		VirtualChest=new VirtualInventoryBlock(Configs.VirtualChestId).setUnlocalizedName(LibBlockNames.VIRTUAL_CHEST);
+		VirtualStorage=new VirtualInventoryBlock(Configs.VirtualStoreId).setUnlocalizedName(LibBlockNames.VIRTUAL_CHEST);
+		VirtualChest=new VirtualInventoryChest(Configs.VirtualChestId).setUnlocalizedName(LibBlockNames.VIRTUAL_STORAGE);
 		
 		
 		
@@ -25,6 +26,7 @@ public class ModBlocks {
 	public static void RegisterBlocks()
 	{
 		GameRegistry.registerBlock(VirtualChest, LibBlockNames.VIRTUAL_CHEST);
+		GameRegistry.registerBlock(VirtualStorage, LibBlockNames.VIRTUAL_STORAGE);
 	}
 	
 	public static void InitTileEntities()

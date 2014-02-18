@@ -1,5 +1,7 @@
 package com.feedthebeast.VirtualChest.core;
 
+import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -113,12 +115,12 @@ public class ChestInventory implements IInventory {
 
 	@Override
 	public void openChest() {
-
+		((TileEntityVirtualInventory)parent).openChest();
 	}
 
 	@Override
 	public void closeChest() {
-
+		((TileEntityVirtualInventory)parent).closeChest();
 	}
 
 	@Override
