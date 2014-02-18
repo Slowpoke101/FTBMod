@@ -29,6 +29,10 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 			return;
 		}
 	}
+	public IInventory getCurrentInventory()
+	{
+		return currentInventory;
+	}
 	public int inventorySize=36;
 	private HashMap<String,  ChestInventory> inventories=new HashMap<String, ChestInventory>();
 	private ChestInventory currentInventory;
