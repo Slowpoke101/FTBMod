@@ -5,6 +5,8 @@ import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 public class ChestInventory implements IInventory {
@@ -128,4 +130,36 @@ public class ChestInventory implements IInventory {
 		return true;
 	}
 
+	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
+		NBTTagList nbttaglist = par1nbtTagCompound.getTagList("Items");
+        this.chestContents = new ItemStack[this.getSizeInventory()];
+        for (int i = 0; i < nbttaglist.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)nbttaglist.tagAt(i);
+            int j = nbttagcompound1.getByte("Slot") & 255;
+
+            if (j >= 0 && j < this.chestContents.length)
+            {
+                this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+            }
+        }
+	}
+
+
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		NBTTagList nbttaglist = new NBTTagList();
+
+        for (int i = 0; i < this.chestContents.length; ++i)
+        {
+            if (this.chestContents[i] != null)
+            {
+                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+                nbttagcompound1.setByte("Slot", (byte)i);
+                this.chestContents[i].writeToNBT(nbttagcompound1);
+                nbttaglist.appendTag(nbttagcompound1);
+            }
+        }
+
+        par1nbtTagCompound.setTag("Items", nbttaglist);
+	}
 }

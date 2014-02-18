@@ -1,6 +1,12 @@
 package com.feedthebeast.VirtualChest.blocks.tile;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import openperipheral.api.Arg;
+import openperipheral.api.LuaCallable;
+import openperipheral.api.LuaType;
 
 import com.feedthebeast.VirtualChest.core.ChestInventory;
 
@@ -11,18 +17,28 @@ import dan200.computer.api.IPeripheral;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityVirtualInventory extends TileEntity implements IInventory,IPeripheral{
+public class TileEntityVirtualInventory extends TileEntity implements IInventory{
 
 	public TileEntityVirtualInventory()
 	{
-		
+		currentInventory=new ChestInventory(inventorySize, this);
 	}
+	
+	
 	public void SetPlayer(String player)
 	{
 		currentInventory=(ChestInventory) GetPlayer(player);
 	}
+	@LuaCallable( description="Setting current player inventory")
+	public void setPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
+	{
+		currentInventory=(ChestInventory) GetPlayer(player);
+	}
+	
 	public IInventory getCurrentInventory()
 	{
 		return currentInventory;
@@ -43,6 +59,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	public int inventorySize=36;
 	private HashMap<String,  ChestInventory> inventories=new HashMap<String, ChestInventory>();
 	private ChestInventory currentInventory;
+	
 	@Override
 	public int getSizeInventory() {
 		return currentInventory.getSizeInventory();
@@ -89,54 +106,73 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		return currentInventory.isUseableByPlayer(entityplayer);
 	}
 
-	@Override
-	public void openChest() {
-		
-	}
 
-	@Override
-	public void closeChest() {
-		
-	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return currentInventory.isItemValidForSlot(i, itemstack);
 	}
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return "VirtualInventory";
-	}
-	@Override
-	public String[] getMethodNames() {
-		// TODO Auto-generated method stub
-		return new String[]{"setPlayer"};
-	}
-	@Override
-	public Object[] callMethod(IComputerAccess computer, ILuaContext context,
-			int method, Object[] arguments) throws Exception {
-		switch(method)
+
+
+
+	@LuaCallable(returnTypes={LuaType.TABLE},description="Gets player list")
+	public Object getPlayersList(IComputerAccess computer) {
+		HashMap<Double,String> pList=new HashMap<Double, String>();
+		int i=0;
+		for(String player:inventories.keySet())
 		{
-		case 1:
-			SetPlayer((String)arguments[0]);
-			return new String[]{};
+			pList.put((double)i++, player);
 		}
-		return null;
+		return pList;
 	}
+
 	@Override
-	public boolean canAttachToSide(int side) {
-		return true;
-	}
-	@Override
-	public void attach(IComputerAccess computer) {
+	public void openChest() {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
-	public void detach(IComputerAccess computer) {
+	public void closeChest() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public static String TAG_INVENTORIES="Inventories";
+	public static String TAG_INVENTORYNAME="InventoryName";
+	public static String TAG_INVENTORY="Inventory";
+	@Override
+	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
+		super.readFromNBT(par1nbtTagCompound);
+		NBTTagList list=par1nbtTagCompound.getTagList(TAG_INVENTORIES);
+		for (int i = 0; i < list.tagCount(); ++i)
+        {
+            NBTTagCompound nbttagcompound1 = (NBTTagCompound)list.tagAt(i);
+            String name=nbttagcompound1.getString(TAG_INVENTORYNAME);
+            ChestInventory inv=new ChestInventory(inventorySize, this);
+            inv.readFromNBT(nbttagcompound1.getCompoundTag(TAG_INVENTORY));
+        }
+		
+	}
+
+
+	@Override
+	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
+		super.writeToNBT(par1nbtTagCompound);
+		NBTTagList nbttaglist = new NBTTagList();
+		Set<Entry<String,ChestInventory>> entries=inventories.entrySet();
+		for(int i=0;i<inventories.size();i++)
+		{
+			NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+			String player=((Entry<String,ChestInventory>)entries.toArray()[0]).getKey();
+			nbttagcompound1.setString(TAG_INVENTORYNAME, player);
+			ChestInventory inv=inventories.get(player);
+			NBTTagCompound inventory=new NBTTagCompound();
+			inv.writeToNBT(inventory);
+			nbttagcompound1.setCompoundTag(TAG_INVENTORY, inventory);
+			nbttaglist.appendTag(nbttagcompound1);
+		}
+		par1nbtTagCompound.setCompoundTag(TAG_INVENTORIES, par1nbtTagCompound);
 	}
 
 }

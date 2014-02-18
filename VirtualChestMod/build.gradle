@@ -1,1 +1,1 @@
-sourceSets {    main {        resources {            srcDir 'resources'        }    }}processResources{    // Replace stuff in text files, not binaries.    from(sourceSets.main.resources.srcDirs) {        include '**'            }}
+sourceSets {    main {        resources {            srcDir 'resources'        }    }}processResources{    // Replace stuff in text files, not binaries.    from(sourceSets.main.resources.srcDirs) {        include '**'            }}
