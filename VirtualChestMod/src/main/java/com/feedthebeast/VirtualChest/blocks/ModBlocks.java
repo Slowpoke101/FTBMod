@@ -14,8 +14,8 @@ public class ModBlocks {
 	public static Block VirtualChest;
 	public static void InitBlocks()
 	{
-		VirtualStorage=new VirtualInventoryBlock(Configs.VirtualStoreId).setUnlocalizedName(LibBlockNames.VIRTUAL_CHEST);
-		VirtualChest=new VirtualInventoryChest(Configs.VirtualChestId).setUnlocalizedName(LibBlockNames.VIRTUAL_STORAGE);
+		VirtualStorage=new VirtualInventoryBlock(Configs.VirtualStoreId).setUnlocalizedName(LibBlockNames.VIRTUAL_STORAGE);
+		VirtualChest=new VirtualInventoryChest(Configs.VirtualChestId).setUnlocalizedName(LibBlockNames.VIRTUAL_CHEST);
 		
 		
 		
