@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ftbvirtualchest",
+  "name": "Virtual Chests",
+  "description": "Adds a computer Craft controllable virtual chest",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["nekosune"],
+  "credits": "FTB, and everyone",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
