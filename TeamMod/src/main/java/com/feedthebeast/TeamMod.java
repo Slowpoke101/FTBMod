@@ -47,7 +47,6 @@ public class TeamMod
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
 	{
-		System.out.println("Reading Team Data");
 		teamHandler = new TeamHandler();
 		NBTTagCompound nbt = null;
 
@@ -88,7 +87,6 @@ public class TeamMod
 	@EventHandler
 	public void serverStopping(FMLServerStoppingEvent event)
 	{
-		System.out.println("Writing Team Data");
 		NBTTagCompound toWrite = new NBTTagCompound();
 		teamHandler.writeToNBT(toWrite);
 		
