@@ -4,12 +4,16 @@ import java.util.HashMap;
 
 import com.feedthebeast.VirtualChest.core.ChestInventory;
 
+import dan200.computer.api.IComputerAccess;
+import dan200.computer.api.ILuaContext;
+import dan200.computer.api.IPeripheral;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityVirtualInventory extends TileEntity implements IInventory{
+public class TileEntityVirtualInventory extends TileEntity implements IInventory,IPeripheral{
 
 	public TileEntityVirtualInventory()
 	{
@@ -98,6 +102,41 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return currentInventory.isItemValidForSlot(i, itemstack);
+	}
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return "VirtualInventory";
+	}
+	@Override
+	public String[] getMethodNames() {
+		// TODO Auto-generated method stub
+		return new String[]{"setPlayer"};
+	}
+	@Override
+	public Object[] callMethod(IComputerAccess computer, ILuaContext context,
+			int method, Object[] arguments) throws Exception {
+		switch(method)
+		{
+		case 1:
+			SetPlayer((String)arguments[0]);
+			return new String[]{};
+		}
+		return null;
+	}
+	@Override
+	public boolean canAttachToSide(int side) {
+		return true;
+	}
+	@Override
+	public void attach(IComputerAccess computer) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void detach(IComputerAccess computer) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

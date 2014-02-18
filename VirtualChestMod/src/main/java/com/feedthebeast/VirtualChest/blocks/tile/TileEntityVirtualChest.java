@@ -12,7 +12,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.util.AxisAlignedBB;
 
-public class TileEntityVirtualChest extends TileEntityVirtualInventory {
+public class TileEntityVirtualChest extends TileEntityVirtualInventory implements IInventory {
 	
 	/** The current angle of the lid (between 0 and 1) */
     public float lidAngle;

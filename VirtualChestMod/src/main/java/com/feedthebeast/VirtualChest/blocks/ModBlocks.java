@@ -1,6 +1,7 @@
 package com.feedthebeast.VirtualChest.blocks;
 
 import com.feedthebeast.VirtualChest.Configs;
+import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualChest;
 import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
 import com.feedthebeast.VirtualChest.lib.LibBlockNames;
 
@@ -31,6 +32,7 @@ public class ModBlocks {
 	
 	public static void InitTileEntities()
 	{
-		GameRegistry.registerTileEntity(TileEntityVirtualInventory.class, LibBlockNames.VIRTUAL_CHEST);
+		GameRegistry.registerTileEntity(TileEntityVirtualInventory.class, LibBlockNames.VIRTUAL_STORAGE);
+		GameRegistry.registerTileEntity(TileEntityVirtualChest.class, LibBlockNames.VIRTUAL_CHEST);
 	}
 }
