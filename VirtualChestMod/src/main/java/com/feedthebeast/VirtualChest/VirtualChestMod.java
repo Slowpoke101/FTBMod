@@ -2,6 +2,9 @@ package com.feedthebeast.VirtualChest;
 
 import java.util.logging.Logger;
 
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.event.ForgeSubscribe;
 
@@ -12,6 +15,8 @@ import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
@@ -34,5 +39,19 @@ public class VirtualChestMod {
 				event.getSuggestedConfigurationFile());
 		Configs.load(config);
 		ModBlocks.InitBlocks();
+		WorldChunkManager.allowedBiomes.clear();
+		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
+	}
+	
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		WorldChunkManager.allowedBiomes.clear();
+		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
+	}
+	
+	public void Init(FMLInitializationEvent event)
+	{
+		WorldChunkManager.allowedBiomes.clear();
+		BiomeManager.addSpawnBiome(BiomeGenBase.desert);
 	}
 }
