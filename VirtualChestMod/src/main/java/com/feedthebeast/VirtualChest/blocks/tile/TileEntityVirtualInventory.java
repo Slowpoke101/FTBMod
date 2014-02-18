@@ -24,7 +24,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		}
 		else
 		{
-			currentInventory=new ChestInventory(inventorySize);
+			currentInventory=new ChestInventory(inventorySize,this);
 			inventories.put(player, currentInventory);
 			return;
 		}

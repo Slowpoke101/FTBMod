@@ -3,14 +3,16 @@ package com.feedthebeast.VirtualChest.core;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 
 public class ChestInventory implements IInventory {
 	private ItemStack[] chestContents;
 	public int size;
-	
-	public ChestInventory(int size)
+	public TileEntity parent;
+	public ChestInventory(int size,TileEntity parent)
 	{
 		this.size=size;
+		this.parent=parent;
 		chestContents=new ItemStack[size];
 	}
 	
@@ -34,7 +36,7 @@ public class ChestInventory implements IInventory {
             {
                 itemstack = this.chestContents[par1];
                 this.chestContents[par1] = null;
-                this.onInventoryChanged();
+                parent.onInventoryChanged();
                 return itemstack;
             }
             else
@@ -46,7 +48,7 @@ public class ChestInventory implements IInventory {
                     this.chestContents[par1] = null;
                 }
 
-                this.onInventoryChanged();
+                parent.onInventoryChanged();
                 return itemstack;
             }
         }
@@ -79,7 +81,7 @@ public class ChestInventory implements IInventory {
 	            par2ItemStack.stackSize = this.getInventoryStackLimit();
 	        }
 
-	        this.onInventoryChanged();
+	        parent.onInventoryChanged();
 
 	}
 
