@@ -26,6 +26,11 @@ public class Team
 		}
 	}
 	
+	public boolean hasMembers()
+	{
+		return !members.isEmpty();
+	}
+	
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		NBTTagList list = new NBTTagList();
@@ -65,5 +70,10 @@ public class Team
 			}
 		}
 		return false;
+	}
+
+	public ArrayList<String> getMembers()
+	{
+		return (ArrayList<String>) members.clone();
 	}
 }

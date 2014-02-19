@@ -1,5 +1,7 @@
 package com.feedthebeast.Blocks;
 
+import com.feedthebeast.TileEntitys.TileEntityTeamPeripheral;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.block.Block;
@@ -24,9 +26,9 @@ public class BlockTeamPeripheral extends BlockContainer
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
-		// TODO Auto-generated method stub
-		return null;
+	public TileEntity createNewTileEntity(World world) 
+	{
+		return new TileEntityTeamPeripheral();
 	}
 
 }

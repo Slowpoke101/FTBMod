@@ -64,7 +64,15 @@ public class TeamClassTransformer implements IClassTransformer
 					AbstractInsnNode in = mn.instructions.get(i);
 					if (in.getOpcode() == ICONST_M1 && mn.instructions.get(i - 1) instanceof VarInsnNode && ((VarInsnNode) mn.instructions.get(i - 1)).var == 16)
 					{
-						System.out.println("Found Color");
+						System.out.println("Found Color 2");
+						MethodInsnNode toInsert = new MethodInsnNode(INVOKESTATIC,"com/feedthebeast/Handler/CoreRedirector","getPlayerColor","(Ljava/lang/String;)I");
+						mn.instructions.insert(in, toInsert);
+						mn.instructions.remove(in);
+						mn.instructions.insertBefore(toInsert, new VarInsnNode(ALOAD,2));
+					}
+					else if (in instanceof LdcInsnNode && ((LdcInsnNode)in).cst.equals(new Integer(553648127)))
+					{
+						System.out.println("Found Color 1");
 						MethodInsnNode toInsert = new MethodInsnNode(INVOKESTATIC,"com/feedthebeast/Handler/CoreRedirector","getPlayerColor","(Ljava/lang/String;)I");
 						mn.instructions.insert(in, toInsert);
 						mn.instructions.remove(in);

@@ -47,19 +47,11 @@ public class CommandTeam extends CommandBase
 					icommandsender.sendChatToPlayer(ChatMessageComponent.createFromText(getCommandUsage(icommandsender)));
 					return;
 				}
-				if (TeamMod.instance.teamHandler.getPlayerTeam(playerName)!=-1)
-				{
-					TeamMod.instance.teamHandler.getTeam(TeamMod.instance.teamHandler.getPlayerTeam(playerName)).removeMember(playerName);
-				}
 				
 				TeamMod.instance.teamHandler.setPlayerTeam(playerName, Integer.parseInt(astring[2]));
 				icommandsender.sendChatToPlayer(ChatMessageComponent.createFromText("Set " + playerName + " team to " + astring[2]));
 				
-				EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(playerName);
-				if (player != null)
-				{
-					PacketDispatcher.sendPacketToAllInDimension(PacketTypeHandler.populatePacket(new PacketTeam(player.username, TeamMod.instance.teamHandler.getPlayerTeam(playerName))), player.worldObj.provider.dimensionId);
-				}
+				
 			}
 			else if (command.equals("get"))
 			{

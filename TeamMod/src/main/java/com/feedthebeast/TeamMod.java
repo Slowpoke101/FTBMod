@@ -3,11 +3,15 @@ package com.feedthebeast;
 import java.io.File;
 import java.io.IOException;
 
+import com.feedthebeast.Blocks.BlockTeamPeripheral;
 import com.feedthebeast.Commands.CommandTeam;
+import com.feedthebeast.Handler.ConfigurationHandler;
 import com.feedthebeast.Handler.TeamEventHandler;
 import com.feedthebeast.Handler.TeamHandler;
+import com.feedthebeast.Library.BlockIds;
 import com.feedthebeast.Library.Reference;
 import com.feedthebeast.Network.PacketHandler;
+import com.feedthebeast.TileEntitys.TileEntityTeamPeripheral;
 
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
@@ -24,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.MOD_VERSION)
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = { Reference.CHANNEL_NAME }, packetHandler = PacketHandler.class)
@@ -34,7 +39,7 @@ public class TeamMod
 	@Instance(Reference.MOD_ID)
 	public static TeamMod instance;
 	
-	public static Block teamPeripheral;
+	public static BlockTeamPeripheral teamPeripheral;
 	
 	File teamFile;
 	
@@ -42,6 +47,12 @@ public class TeamMod
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new TeamEventHandler());
+		
+		ConfigurationHandler.init(event);
+		
+		teamPeripheral = new BlockTeamPeripheral(BlockIds.teamPeripheral_ID);
+		
+		GameRegistry.registerTileEntity(TileEntityTeamPeripheral.class, "teamPeripheral");
 	}
 
 	@EventHandler
