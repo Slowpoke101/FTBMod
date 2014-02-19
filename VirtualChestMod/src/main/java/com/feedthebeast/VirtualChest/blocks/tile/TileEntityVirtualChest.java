@@ -3,7 +3,7 @@ package com.feedthebeast.VirtualChest.blocks.tile;
 import java.util.Iterator;
 import java.util.List;
 
-import com.feedthebeast.VirtualChest.blocks.VirtualInventoryBlock;
+import com.feedthebeast.VirtualChest.blocks.BlockVirtualInventory;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +44,7 @@ public class TileEntityVirtualChest extends TileEntityVirtualInventory implement
 	@Override
 	public void closeChest() {
 		super.closeChest();
-		 if (this.getBlockType() != null && this.getBlockType() instanceof VirtualInventoryBlock)
+		 if (this.getBlockType() != null && this.getBlockType() instanceof BlockVirtualInventory)
 	        {
 	            --this.numUsingPlayers;
 	            this.worldObj.addBlockEvent(this.xCoord, this.yCoord, this.zCoord, this.getBlockType().blockID, 1, this.numUsingPlayers);

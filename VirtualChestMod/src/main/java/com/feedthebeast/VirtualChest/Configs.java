@@ -26,6 +26,7 @@ public class Configs {
 	// Blocks!
 	public static @CfgId(block=true,comment="Block ID for Virtual Chest") int VirtualChestId=500;
 	public static @CfgId(block=true,comment="Block ID for Virtual Store") int VirtualStoreId=501;
+	public static @CfgId(block=true,comment="Block ID for Virtual Tank") int VirtualTankId=502;
 	
 	public static void load(Configuration config)
 	{
