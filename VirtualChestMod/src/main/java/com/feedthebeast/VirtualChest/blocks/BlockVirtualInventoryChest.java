@@ -13,6 +13,7 @@ public class BlockVirtualInventoryChest extends BlockVirtualInventory {
 
 	public BlockVirtualInventoryChest(int par1) {
 		super(par1);
+		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
 	}
 
 
@@ -36,7 +37,7 @@ public class BlockVirtualInventoryChest extends BlockVirtualInventory {
 	}
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
 	{
-		this.setBlockBounds(0.0625F, 0.0F, 0.0625F, 0.9375F, 0.875F, 0.9375F);
+		
 	}
 	 @SideOnly(Side.CLIENT)
 
