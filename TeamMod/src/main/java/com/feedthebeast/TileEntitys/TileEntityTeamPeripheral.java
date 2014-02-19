@@ -38,14 +38,17 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 				{
 					throw new Exception("setTeamForPlayer PLAYERNAME TEAMID");
 				}
-				TeamMod.instance.teamHandler.setPlayerTeam((String) arguments[0], (int)(double)arguments[1]);
+				Double teamID=(Double)arguments[1];
+				
+				TeamMod.instance.teamHandler.setPlayerTeam((String) arguments[0], (int)(double)teamID);
 				return null;
 			case 2: // getPlayersForTeam
 				if (arguments.length < 1 || !(arguments[0] instanceof Double))
 				{
 					throw new Exception("getPlayersForTeam TEAMID");
 				}
-				return TeamMod.instance.teamHandler.getPlayersForTeam( (int)(double) arguments[0]).toArray(new String[]{});
+				Double teamID2=(Double)arguments[1];
+				return TeamMod.instance.teamHandler.getPlayersForTeam( (int)(double) teamID2).toArray(new String[]{});
 			case 3: // getTeamsWithPlayers
 				return TeamMod.instance.teamHandler.getTeamsWithPlayers().toArray(new Double[]{});
 		}
