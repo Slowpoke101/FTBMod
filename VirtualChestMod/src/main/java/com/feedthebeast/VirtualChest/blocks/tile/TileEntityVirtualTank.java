@@ -190,7 +190,7 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 		intervals.put(fluid, amount);
 		changes.put(fluid, 0D);
 	}
-	
+	// UNSTAGED CHANGE
 	@Override
 	public void addComputer(IComputerAccess computer) {
 		if (!computers.contains(computer)) {
