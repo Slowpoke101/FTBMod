@@ -1,5 +1,9 @@
 package com.feedthebeast.TileEntitys;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 import com.feedthebeast.TeamMod;
 
 import dan200.computer.api.IComputerAccess;
@@ -9,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 {
-
+	HashSet<IComputerAccess> attachedComputers = new HashSet<IComputerAccess>();
 	@Override
 	public String getType()
 	{
@@ -45,11 +49,37 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 				{
 					throw new Exception("getPlayersForTeam TEAMID");
 				}
-				return TeamMod.instance.teamHandler.getPlayersForTeam( (int)(double) arguments[0]).toArray(new String[]{});
+				return new Object[]{generatePlayerMap(TeamMod.instance.teamHandler.getPlayersForTeam( (int)(double) arguments[0]).toArray(new String[]{}))};
 			case 3: // getTeamsWithPlayers
-				return TeamMod.instance.teamHandler.getTeamsWithPlayers().toArray(new Double[]{});
+				return new Object[]{generateTeamMap(TeamMod.instance.teamHandler.getTeamsWithPlayers().toArray(new Double[]{}))};
 		}
 		return null;
+	}
+	
+	private Map<Double,String> generatePlayerMap(String[] array)
+	{
+		HashMap<Double,String> map = new HashMap<Double,String>();
+		double counter=1.0;
+		for (String s:array)
+		{
+			map.put(counter, s);
+			counter+=1.0;
+		}
+		
+		return map;
+	}
+	
+	private Map<Double,Double> generateTeamMap(Double[] array)
+	{
+		HashMap<Double,Double> map = new HashMap<Double,Double>();
+		double counter=1.0;
+		for (Double d:array)
+		{
+			map.put(counter, d);
+			counter+=1.0;
+		}
+		
+		return map;
 	}
 
 	@Override
@@ -61,15 +91,13 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 	@Override
 	public void attach(IComputerAccess computer)
 	{
-		// TODO Auto-generated method stub
-
+		attachedComputers.add(computer);
 	}
 
 	@Override
 	public void detach(IComputerAccess computer)
 	{
-		// TODO Auto-generated method stub
-
+		attachedComputers.remove(computer);
 	}
 
 }
