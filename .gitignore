@@ -17,7 +17,8 @@ out/
 *.iws
 .settings/
 .metadata/
-.classpath/
+.classpath
+CoFHCore-2.0.0.2.jar
 .project/
 bin/
 client/
