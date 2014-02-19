@@ -78,24 +78,25 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		Fluid fluid=resource.getFluid();
 		FluidTank tank=GetTank(fluid);
+		
+		
+		int accepted=tank.fill(resource, doFill);
 		if(intervals.containsKey(fluid) && doFill)
 		{
 			if(!changes.containsKey(fluid))
-				changes.put(fluid, (double)resource.amount);
+				changes.put(fluid, (double)accepted);
 			else
 			{
-				changes.put(fluid, changes.get(fluid)+resource.amount);
+				changes.put(fluid, changes.get(fluid)+accepted);
 			}
 			double change=changes.get(fluid);
 			if(change>=intervals.get(fluid))
 			{
 				changes.put(fluid,0D);
 				for(IComputerAccess computer:computers)
-				computer.queueEvent("fluid_interval", new Object[]{fluid.getUnlocalizedName(),changes,tank.getFluidAmount()});
+				computer.queueEvent("fluid_interval", new Object[]{fluid.getUnlocalizedName(),change,tank.getFluidAmount()});
 			}
 		}
-		
-		int accepted=tank.fill(resource, doFill);
 		if(caps.containsKey(fluid) && accepted >0 && doFill)
 		{
 			if(tank.getFluidAmount()>caps.get(fluid))
@@ -167,7 +168,29 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 		}
 		return retval;
 	}
-
+	
+	@LuaCallable( description="Sets the softcap on event")
+	public void setSoftCap(IComputerAccess computer,@Arg(name="fluidName", type = LuaType.STRING)String fluidName,@Arg(name="amount",type=LuaType.NUMBER)double amount)
+	{
+		Fluid fluid=FluidRegistry.getFluid(fluidName);
+		if(fluid==null)
+			return;
+		FluidTank tank=GetTank(fluid);
+		caps.put(fluid, amount);
+	}
+	
+	
+	@LuaCallable( description="Sets the change interval event")
+	public void setChangeInterval(IComputerAccess computer,@Arg(name="fluidName", type = LuaType.STRING)String fluidName,@Arg(name="amount",type=LuaType.NUMBER)double amount)
+	{
+		Fluid fluid=FluidRegistry.getFluid(fluidName);
+		if(fluid==null)
+			return;
+		FluidTank tank=GetTank(fluid);
+		intervals.put(fluid, amount);
+		changes.put(fluid, 0D);
+	}
+	
 	@Override
 	public void addComputer(IComputerAccess computer) {
 		if (!computers.contains(computer)) {
