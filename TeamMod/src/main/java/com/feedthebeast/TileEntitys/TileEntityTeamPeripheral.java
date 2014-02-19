@@ -29,6 +29,7 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 	@Override
 	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws Exception
 	{
+		Double teamID;
 		switch (method)
 		{
 			case 0: // getTeamForPlayer
@@ -42,14 +43,16 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 				{
 					throw new Exception("setTeamForPlayer PLAYERNAME TEAMID");
 				}
-				TeamMod.instance.teamHandler.setPlayerTeam((String) arguments[0], (int)(double)arguments[1]);
+				teamID = (Double) arguments[1];
+				TeamMod.instance.teamHandler.setPlayerTeam((String) arguments[0], (int)((double)teamID));
 				return null;
 			case 2: // getPlayersForTeam
 				if (arguments.length < 1 || !(arguments[0] instanceof Double))
 				{
 					throw new Exception("getPlayersForTeam TEAMID");
 				}
-				return new Object[]{generatePlayerMap(TeamMod.instance.teamHandler.getPlayersForTeam( (int)(double) arguments[0]).toArray(new String[]{}))};
+				teamID = (Double) arguments[1];
+				return new Object[]{generatePlayerMap(TeamMod.instance.teamHandler.getPlayersForTeam( (int)((double)teamID)).toArray(new String[]{}))};
 			case 3: // getTeamsWithPlayers
 				return new Object[]{generateTeamMap(TeamMod.instance.teamHandler.getTeamsWithPlayers().toArray(new Double[]{}))};
 		}
