@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.Set;
 
 import openperipheral.api.Arg;
@@ -11,6 +12,7 @@ import openperipheral.api.IAttachable;
 import openperipheral.api.LuaCallable;
 import openperipheral.api.LuaType;
 
+import com.feedthebeast.TeamMod;
 import com.feedthebeast.VirtualChest.core.ChestInventory;
 import com.google.common.collect.Lists;
 
@@ -40,6 +42,20 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 		currentPlayer=player;
 		currentInventory=(ChestInventory) GetPlayer(player);
 	}
+	
+	@LuaCallable( description="Setting current team inventory")
+	public void setTeam(IComputerAccess computer,@Arg(type = LuaType.NUMBER,name="team") int team)
+	{
+		currentPlayer="Team-"+team;
+		currentInventory=(ChestInventory) GetPlayer(currentPlayer);
+	}
+	
+	@LuaCallable( description="Setting current team inventory")
+	public void setTeamByPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
+	{
+		currentPlayer="Team-"+TeamMod.instance.teamHandler.getPlayerTeam(player);
+		currentInventory=(ChestInventory) GetPlayer(currentPlayer);
+	}
 	@LuaCallable( description="Setting current player inventory")
 	public void setPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
 	{
@@ -50,7 +66,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	public void onInventoryChanged(ChestInventory inv) {
 		super.onInventoryChanged();
 		for (IComputerAccess computer : computers) {
-			computer.queueEvent(EVENT_INVENTORY_CHANGED, new Object[]{inv.PlayerName});
+			computer.queueEvent(EVENT_INVENTORY_CHANGED, new Object[]{Integer.parseInt(inv.PlayerName.substring(5))});
 		}
 	}
 
@@ -132,8 +148,8 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 
 
 
-	@LuaCallable(returnTypes={LuaType.TABLE},description="Gets player list")
-	public Object getPlayersList(IComputerAccess computer) {
+	@LuaCallable(returnTypes={LuaType.TABLE},description="Gets inventory list")
+	public Object getInventoryList(IComputerAccess computer) {
 		HashMap<Double,String> pList=new HashMap<Double, String>();
 		int i=0;
 		for(String player:inventories.keySet())
