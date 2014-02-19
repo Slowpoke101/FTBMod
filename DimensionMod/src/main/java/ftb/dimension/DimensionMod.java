@@ -2,6 +2,7 @@ package ftb.dimension;
 
 import java.util.HashMap;
 
+import net.minecraft.block.Block;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
@@ -18,6 +19,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import ftb.dimension.core.CommandJoL;
 import ftb.dimension.core.CommonProxy;
 import ftb.dimension.core.WorldHandler;
+import ftb.dimension.items.BlockPortalFTB;
 import ftb.dimension.items.ItemKey;
 import ftb.dimension.util.Utils;
 
@@ -33,6 +35,9 @@ public class DimensionMod
 	public static Item key;
 	public static int keyID;
 	
+	public static Block portalBlock;
+	public static int portalBlockID;
+	
 	public HashMap<String, Integer> dimensions = new HashMap<String, Integer>();
 	
 	@EventHandler
@@ -41,8 +46,10 @@ public class DimensionMod
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 		keyID = config.getItem("key", 23456).getInt();
+		portalBlockID = config.getBlock("portalblock", 2600).getInt();
 		config.save();
 		key = new ItemKey(keyID);
+		portalBlock = new BlockPortalFTB(portalBlockID);
 	}
 	
 	@EventHandler

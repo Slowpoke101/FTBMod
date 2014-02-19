@@ -1,24 +1,34 @@
 package ftb.dimension.items;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ftb.dimension.DimensionMod;
+import ftb.dimension.util.TeamColors;
+import ftb.dimension.util.Utils;
 
 public class BlockPortalFTB extends BlockBreakable
 {
-	public BlockPortalFTB(int par1, String nameColor) 
+    @SideOnly(Side.CLIENT)
+    private Icon[] iconArray;
+	
+	public BlockPortalFTB(int par1) 
 	{
-        super(par1, "portal" + nameColor, Material.portal, false);
+        super(par1, "portal", Material.portal, false);
         this.setTickRandomly(true);
 	}
 
@@ -263,5 +273,30 @@ public class BlockPortalFTB extends BlockBreakable
     public int idPicked(World par1World, int par2, int par3, int par4)
     {
         return 0;
+    }
+
+	@SideOnly(Side.CLIENT)
+    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
+        for (int j = 0; j < 16; ++j)
+        {
+            par3List.add(new ItemStack(par1, 1, j));
+        }
+    }
+    
+    public Icon getIcon(int par1, int par2)
+    {
+        return this.iconArray[par2];
+    }
+    
+    @Override
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        this.iconArray = new Icon[16];
+
+        for (int i = 0; i < this.iconArray.length; ++i)
+        {
+            this.iconArray[i] = par1IconRegister.registerIcon(Utils.modid + ":portal" + TeamColors.values()[i].name());
+        }
     }
 }

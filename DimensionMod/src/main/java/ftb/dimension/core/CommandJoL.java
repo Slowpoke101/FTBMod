@@ -2,11 +2,12 @@ package ftb.dimension.core;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import ftb.dimension.DimensionMod;
 
 public class CommandJoL extends CommandBase
-{	
+{
 	@Override
     public int getRequiredPermissionLevel()
     {
@@ -14,7 +15,7 @@ public class CommandJoL extends CommandBase
     }
 	
 	@Override
-	public String getCommandName() 
+	public String getCommandName()
 	{
 		return "jol";
 	}
@@ -22,9 +23,25 @@ public class CommandJoL extends CommandBase
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) 
 	{
-		EntityPlayerMP player = (EntityPlayerMP)sender;
-		player.travelToDimension(DimensionMod.instance.dimensions.get(player.username));
-	}
+		String s = args[0];
+		if(s.matches("tele"))
+		{
+			EntityPlayerMP player = (EntityPlayerMP)sender;
+			player.travelToDimension(DimensionMod.instance.dimensions.get(player.username));
+		}
+		else
+		{
+			int i = Integer.parseInt(s);
+			EntityPlayer player = (EntityPlayer) sender;
+			player.worldObj.setBlock((int)player.posX + 1, (int)player.posY, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+			player.worldObj.setBlock((int)player.posX, (int)player.posY, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+			player.worldObj.setBlock((int)player.posX + 1, (int)player.posY + 1, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+			player.worldObj.setBlock((int)player.posX, (int)player.posY + 1, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+			player.worldObj.setBlock((int)player.posX + 1, (int)player.posY + 2, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+			player.worldObj.setBlock((int)player.posX, (int)player.posY + 2, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
+
+		}
+ 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender) {
