@@ -49,10 +49,6 @@ public class VirtualChestMod {
 		ModBlocks.InitBlocks();
 		
 		proxy.RegisterRenderers();
-
-		if(Loader.isModLoaded("Waila")) {
-			FMLInterModComms.sendMessage("Waila", "register", "com.feedthebeast.VirtualChest.TeamWaila.callbackRegister");
-		}
 	}
 	
 	@EventHandler
