@@ -19,7 +19,7 @@ out/
 .metadata/
 .classpath
 CoFHCore-2.0.0.2.jar
-.project/
+.project
 bin/
 client/
 Server/
