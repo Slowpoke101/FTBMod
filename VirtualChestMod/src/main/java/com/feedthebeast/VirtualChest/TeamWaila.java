@@ -42,11 +42,7 @@ public class TeamWaila implements IWailaEntityProvider, IWailaConfigHandler {
 		return null;
 	}
 
-	@Override
-	public void setConfig(String arg0, boolean arg1) {
-		// TODO Auto-generated method stub
 
-	}
 
 	@Override
 	public List<String> getWailaBody(Entity arg0, List<String> arg1,
@@ -68,11 +64,7 @@ public class TeamWaila implements IWailaEntityProvider, IWailaConfigHandler {
 		return arg1;
 	}
 
-	@Override
-	public Icon getWailaIcon(IWailaEntityAccessor arg0, IWailaConfigHandler arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public Entity getWailaOverride(IWailaEntityAccessor arg0,
@@ -89,7 +81,7 @@ public class TeamWaila implements IWailaEntityProvider, IWailaConfigHandler {
 	}
 	
 	
-	public static void RegisterWAILA(IWailaRegistrar registar)
+	public static void callbackRegister(IWailaRegistrar registar)
 	{
 		registar.registerBodyProvider(new TeamWaila(), EntityPlayerMP.class);
 	}

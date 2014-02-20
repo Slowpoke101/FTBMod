@@ -16,11 +16,13 @@ import com.feedthebeast.VirtualChest.core.CommonProxy;
 import com.feedthebeast.VirtualChest.lib.LibMisc;
 
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -45,9 +47,12 @@ public class VirtualChestMod {
 				event.getSuggestedConfigurationFile());
 		Configs.load(config);
 		ModBlocks.InitBlocks();
+		
 		proxy.RegisterRenderers();
 
-		
+		if(Loader.isModLoaded("Waila")) {
+			FMLInterModComms.sendMessage("Waila", "register", "com.feedthebeast.VirtualChest.TeamWaila.callbackRegister");
+		}
 	}
 	
 	@EventHandler
