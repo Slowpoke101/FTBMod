@@ -2,27 +2,18 @@ package com.feedthebeast.virtualchest;
 
 import java.util.logging.Logger;
 
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.biome.WorldChunkManager;
-import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.ForgeSubscribe;
-
 import com.feedthebeast.virtualchest.blocks.ModBlocks;
 import com.feedthebeast.virtualchest.core.CommonProxy;
 
 import com.feedthebeast.virtualchest.lib.LibMisc;
 
 import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -49,7 +40,6 @@ public class VirtualChestMod {
 		ModBlocks.InitBlocks();
 		
 		proxy.RegisterRenderers();
-
 	}
 	
 	@EventHandler
