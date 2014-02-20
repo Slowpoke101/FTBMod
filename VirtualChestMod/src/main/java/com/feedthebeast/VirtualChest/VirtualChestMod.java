@@ -50,7 +50,6 @@ public class VirtualChestMod {
 		
 		proxy.RegisterRenderers();
 
-
 	}
 	
 	@EventHandler

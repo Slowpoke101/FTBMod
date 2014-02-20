@@ -11,8 +11,6 @@ public class CoreRedirector
 {
 	public static int getPlayerColor(String playerName)
 	{
-		FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-		//fontRenderer.drawString("Test", -fontRenderer.getStringWidth("Test") / 2, -10, 553648127);
 		if (ClientTeamHandler.teamCache.containsKey(playerName))
 		{
 			int team = ClientTeamHandler.teamCache.get(playerName);
