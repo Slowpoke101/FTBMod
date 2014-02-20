@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest.core;
+package com.feedthebeast.virtualchest.core;
 
 public class CommonProxy {
 

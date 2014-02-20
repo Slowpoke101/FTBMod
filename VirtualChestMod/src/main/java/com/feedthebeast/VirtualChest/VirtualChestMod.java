@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest;
+package com.feedthebeast.virtualchest;
 
 import java.util.logging.Logger;
 
@@ -10,10 +10,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.ForgeSubscribe;
 
-import com.feedthebeast.VirtualChest.blocks.ModBlocks;
-import com.feedthebeast.VirtualChest.core.CommonProxy;
+import com.feedthebeast.virtualchest.blocks.ModBlocks;
+import com.feedthebeast.virtualchest.core.CommonProxy;
 
-import com.feedthebeast.VirtualChest.lib.LibMisc;
+import com.feedthebeast.virtualchest.lib.LibMisc;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -33,7 +33,7 @@ public class VirtualChestMod {
 	@Instance(LibMisc.MODID)
 	public static VirtualChestMod instance;
 
-	@SidedProxy(clientSide="com.feedthebeast.VirtualChest.client.core.ClientProxy",serverSide="com.feedthebeast.VirtualChest.core.CommonProxy")
+	@SidedProxy(clientSide="com.feedthebeast.virtualchest.client.core.ClientProxy",serverSide="com.feedthebeast.virtualchest.core.CommonProxy")
 	public static CommonProxy proxy;
 	public static Logger logger;
 	
@@ -50,9 +50,7 @@ public class VirtualChestMod {
 		
 		proxy.RegisterRenderers();
 
-		if(Loader.isModLoaded("Waila")) {
-			FMLInterModComms.sendMessage("Waila", "register", "com.feedthebeast.VirtualChest.TeamWaila.callbackRegister");
-		}
+
 	}
 	
 	@EventHandler

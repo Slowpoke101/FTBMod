@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest;
+package com.feedthebeast.virtualchest;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

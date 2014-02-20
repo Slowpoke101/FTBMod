@@ -1,23 +1,21 @@
-package com.feedthebeast.VirtualChest.core;
+package com.feedthebeast.virtualchest.core;
 
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
 
 public class ChestInventory implements IInventory {
 	private ItemStack[] chestContents;
 	public int size;
-	public TileEntityVirtualInventory parent;
+	public VirtualChestData parent;
 	public String PlayerName;
-	public ChestInventory(int size,TileEntity parent,String Name)
+	public ChestInventory(int size,VirtualChestData parent,String Name)
 	{
 		this.size=size;
-		this.parent=(TileEntityVirtualInventory) parent;
+		this.parent=(VirtualChestData) parent;
 		this.PlayerName=Name;
 		chestContents=new ItemStack[size];
 	}
@@ -119,12 +117,12 @@ public class ChestInventory implements IInventory {
 
 	@Override
 	public void openChest() {
-		((TileEntityVirtualInventory)parent).openChest();
+		((VirtualChestData)parent).openChest();
 	}
 
 	@Override
 	public void closeChest() {
-		((TileEntityVirtualInventory)parent).closeChest();
+		((VirtualChestData)parent).closeChest();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest.blocks.tile;
+package com.feedthebeast.virtualchest.blocks.tile;
 
 import java.util.HashMap;
 import java.util.List;

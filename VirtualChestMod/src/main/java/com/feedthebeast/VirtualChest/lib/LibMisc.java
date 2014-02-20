@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest.lib;
+package com.feedthebeast.virtualchest.lib;
 
 public class LibMisc {
 

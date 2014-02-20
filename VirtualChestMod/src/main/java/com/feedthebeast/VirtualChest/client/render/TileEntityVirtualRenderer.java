@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest.client.render;
+package com.feedthebeast.virtualchest.client.render;
 
 import java.util.Calendar;
 
@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualChest;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualChest;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

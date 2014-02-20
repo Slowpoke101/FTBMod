@@ -1,10 +1,10 @@
-package com.feedthebeast.VirtualChest.blocks;
+package com.feedthebeast.virtualchest.blocks;
 
-import com.feedthebeast.VirtualChest.Configs;
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualChest;
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualTank;
-import com.feedthebeast.VirtualChest.lib.LibBlockNames;
+import com.feedthebeast.virtualchest.Configs;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualChest;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualInventory;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualTank;
+import com.feedthebeast.virtualchest.lib.LibBlockNames;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 

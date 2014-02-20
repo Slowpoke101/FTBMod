@@ -1,6 +1,6 @@
-package com.feedthebeast.VirtualChest.blocks;
+package com.feedthebeast.virtualchest.blocks;
 
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualChest;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualChest;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

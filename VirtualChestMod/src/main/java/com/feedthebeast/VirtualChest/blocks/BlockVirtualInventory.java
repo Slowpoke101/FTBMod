@@ -1,10 +1,10 @@
-package com.feedthebeast.VirtualChest.blocks;
+package com.feedthebeast.virtualchest.blocks;
 
 import static net.minecraftforge.common.ForgeDirection.DOWN;
 
 import com.feedthebeast.TeamMod;
 import com.feedthebeast.Handler.TeamHandler;
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualInventory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -33,7 +33,7 @@ public class BlockVirtualInventory extends BlockContainer {
         {
         	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
         	//inv.SetPlayer(par5EntityPlayer.username);
-            IInventory iinventory = inv.GetPlayer("Team-"+TeamMod.instance.teamHandler.getPlayerTeam(par5EntityPlayer.username));
+            IInventory iinventory = inv.GetInventory("Team-"+TeamMod.instance.teamHandler.getPlayerTeam(par5EntityPlayer.username));
 
             if (this.canGetInventory(par1World, par2, par3, par4))
             {

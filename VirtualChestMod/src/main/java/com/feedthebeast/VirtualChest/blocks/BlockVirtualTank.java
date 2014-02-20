@@ -1,6 +1,6 @@
-package com.feedthebeast.VirtualChest.blocks;
+package com.feedthebeast.virtualchest.blocks;
 
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualTank;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualTank;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;

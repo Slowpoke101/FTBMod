@@ -1,9 +1,9 @@
-package com.feedthebeast.VirtualChest.blocks.tile;
+package com.feedthebeast.virtualchest.blocks.tile;
 
 import java.util.Iterator;
 import java.util.List;
 
-import com.feedthebeast.VirtualChest.blocks.BlockVirtualInventory;
+import com.feedthebeast.virtualchest.blocks.BlockVirtualInventory;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.player.EntityPlayer;

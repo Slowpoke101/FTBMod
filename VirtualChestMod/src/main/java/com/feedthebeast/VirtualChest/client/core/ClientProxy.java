@@ -1,11 +1,11 @@
-package com.feedthebeast.VirtualChest.client.core;
+package com.feedthebeast.virtualchest.client.core;
 
 import net.minecraft.client.renderer.tileentity.TileEntityChestRenderer;
 
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualChest;
-import com.feedthebeast.VirtualChest.blocks.tile.TileEntityVirtualInventory;
-import com.feedthebeast.VirtualChest.client.render.TileEntityVirtualRenderer;
-import com.feedthebeast.VirtualChest.core.CommonProxy;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualChest;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualInventory;
+import com.feedthebeast.virtualchest.client.render.TileEntityVirtualRenderer;
+import com.feedthebeast.virtualchest.core.CommonProxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;

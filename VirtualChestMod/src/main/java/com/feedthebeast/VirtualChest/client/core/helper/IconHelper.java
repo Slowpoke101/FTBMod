@@ -12,10 +12,10 @@
  *
  * File Created @ [8 Sep 2013, 15:47:08 (GMT)]
  */
-package com.feedthebeast.VirtualChest.client.core.helper;
+package com.feedthebeast.virtualchest.client.core.helper;
 
-import com.feedthebeast.VirtualChest.client.lib.LibResources;
-import com.feedthebeast.VirtualChest.lib.LibMisc;
+import com.feedthebeast.virtualchest.client.lib.LibResources;
+import com.feedthebeast.virtualchest.lib.LibMisc;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IconRegister;

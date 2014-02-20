@@ -1,4 +1,4 @@
-package com.feedthebeast.VirtualChest.client.lib;
+package com.feedthebeast.virtualchest.client.lib;
 
 public class LibResources {
 
