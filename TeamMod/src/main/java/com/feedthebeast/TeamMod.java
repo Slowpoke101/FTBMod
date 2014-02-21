@@ -2,6 +2,8 @@ package com.feedthebeast;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.feedthebeast.Blocks.BlockTeamPeripheral;
 import com.feedthebeast.Commands.CommandTeam;
@@ -22,6 +24,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.Loader;
@@ -51,9 +54,12 @@ public class TeamMod
 
 	File teamFile;
 
+	Logger modLog;
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		modLog = event.getModLog();
 		MinecraftForge.EVENT_BUS.register(new TeamEventHandler());
 
 		ConfigurationHandler.init(event);
@@ -77,15 +83,34 @@ public class TeamMod
 	{
 		teamHandler = new TeamHandler();
 		NBTTagCompound nbt = null;
+		MinecraftServer server = event.getServer();
+		String folderName = "world";
+		if (server instanceof DedicatedServer)
+		{
+			folderName = ((DedicatedServer) server).getStringProperty("level-name", "world");
+		}
 
-		teamFile = new File("teams.dat");
+		teamFile = new File(folderName + "/teams.dat");
+		if (!teamFile.exists())
+		{
+			modLog.log(Level.INFO, "Creating Teams File for "+folderName);
+			try
+			{
+				teamFile.createNewFile();
+				CompressedStreamTools.write(new NBTTagCompound(), teamFile);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 		try
 		{
 			nbt = CompressedStreamTools.read(teamFile);
 		}
 		catch (IOException e)
 		{
-			System.out.println("Couldn't find Teams File");
+			modLog.log(Level.WARNING, "Couldn't find Teams File");
 			e.printStackTrace();
 		}
 
@@ -98,13 +123,11 @@ public class TeamMod
 			}
 			catch (IOException e)
 			{
-				System.out.println("Error reading Team Data from Disk");
+				modLog.log(Level.WARNING,"Error reading Team Data from Disk");
 				e.printStackTrace();
 			}
 		}
 		teamHandler.readFromNBT(nbt);
-
-		MinecraftServer server = MinecraftServer.getServer();
 
 		ICommandManager command = server.getCommandManager();
 		ServerCommandManager servercommand = ((ServerCommandManager) command);
