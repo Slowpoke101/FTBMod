@@ -23,6 +23,7 @@ public class InventoryManager {
 			chest=new VirtualChestData(name);
 		chest.Initialize(size);
 		inventories.put(name, chest);
+		world.setItemData(name, chest);
 		return chest;
 	}
 

@@ -42,7 +42,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	private List<IComputerAccess> computers = Lists.newArrayList();
 	public TileEntityVirtualInventory()
 	{
-		currentPlayer="";
+		currentPlayer="Team--1";
 		//currentData=InventoryManager.getChest("Team-1", getWorldObj(), inventorySize);
 	}
 	
@@ -88,7 +88,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	
 	
 	public int inventorySize=36;
-	public String currentPlayer="";
+	public String currentPlayer="Team--1";
 	private VirtualChestData currentData;
 	
 	@Override
