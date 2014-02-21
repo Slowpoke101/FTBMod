@@ -1,5 +1,7 @@
 package com.feedthebeast.Commands;
 
+import java.util.List;
+
 import com.feedthebeast.TeamMod;
 import com.feedthebeast.Network.PacketTypeHandler;
 import com.feedthebeast.Network.Packets.PacketTeam;
@@ -26,6 +28,24 @@ public class CommandTeam extends CommandBase
 	{
 		return "/team set|get playername [team]";
 	}
+	
+	@Override
+    public List addTabCompletionOptions(ICommandSender par1ICommandSender, String[] par2ArrayOfStr)
+    {
+		switch (par2ArrayOfStr.length)
+		{
+			case 1:
+				return getListOfStringsMatchingLastWord(par2ArrayOfStr,new String[]{"get","set"});
+			case 2:
+				return getListOfStringsMatchingLastWord(par2ArrayOfStr,getListOfPlayerUsernames());
+		}
+        return null;
+    }
+	
+    protected String[] getListOfPlayerUsernames()
+    {
+        return MinecraftServer.getServer().getAllUsernames();
+    }
 
 	@Override
 	public void processCommand(ICommandSender icommandsender, String[] astring)

@@ -14,10 +14,9 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 public class TeamEventHandler
 {
 	@ForgeSubscribe
-	@SideOnly(Side.SERVER)
 	public void entityJoining(EntityJoinWorldEvent event)
 	{
-		if (event.entity instanceof EntityPlayerMP)
+		if (event.entity instanceof EntityPlayerMP && !event.entity.worldObj.isRemote)
 		{
 			EntityPlayerMP player = (EntityPlayerMP) event.entity;
 			PacketDispatcher.sendPacketToAllInDimension(PacketTypeHandler.populatePacket(new PacketTeam(player.username,TeamMod.instance.teamHandler.getPlayerTeam(player.username))), player.worldObj.provider.dimensionId);
