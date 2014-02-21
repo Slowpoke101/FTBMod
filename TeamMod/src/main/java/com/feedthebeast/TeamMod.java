@@ -25,6 +25,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.Loader;
@@ -84,10 +85,14 @@ public class TeamMod
 		teamHandler = new TeamHandler();
 		NBTTagCompound nbt = null;
 		MinecraftServer server = event.getServer();
-		String folderName = "world";
+		String folderName = "saves";
 		if (server instanceof DedicatedServer)
 		{
 			folderName = ((DedicatedServer) server).getStringProperty("level-name", "world");
+		}
+		else
+		{
+			folderName = "saves/"+DimensionManager.getCurrentSaveRootDirectory().getName();
 		}
 
 		teamFile = new File(folderName + "/teams.dat");
