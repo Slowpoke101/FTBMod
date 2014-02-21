@@ -23,26 +23,7 @@ public class BlockVirtualInventory extends BlockContainer {
 		super(par1, Material.iron);
 		this.setCreativeTab(CreativeTabs.tabRedstone);
 	}
-	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
-    {
-        if (par1World.isRemote)
-        {
-            return true;
-        }
-        else
-        {
-        	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
-        	//inv.SetPlayer(par5EntityPlayer.username);
-            IInventory iinventory = inv.GetInventory("Team-"+TeamMod.instance.teamHandler.getPlayerTeam(par5EntityPlayer.username));
-
-            if (this.canGetInventory(par1World, par2, par3, par4))
-            {
-                par5EntityPlayer.displayGUIChest(iinventory);
-            }
-
-            return true;
-        }
-    }
+	
 	
 	
 	public boolean canGetInventory(World par1World, int par2, int par3, int par4)

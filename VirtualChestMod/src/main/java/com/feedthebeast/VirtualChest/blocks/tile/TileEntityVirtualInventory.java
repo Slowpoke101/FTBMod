@@ -200,7 +200,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 
 
 	public IInventory GetInventory(String string) {
-		VirtualChestData inv=InventoryManager.getChest(currentPlayer,getWorldObj(),inventorySize);
+		VirtualChestData inv=InventoryManager.getChest(string,getWorldObj(),inventorySize);
 		inv.AddVirtualBlock(this);
 		return inv.inventory;
 	}

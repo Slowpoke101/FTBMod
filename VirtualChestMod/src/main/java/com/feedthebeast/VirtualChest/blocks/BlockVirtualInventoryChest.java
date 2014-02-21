@@ -1,10 +1,14 @@
 package com.feedthebeast.virtualchest.blocks;
 
+import com.feedthebeast.TeamMod;
 import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualChest;
+import com.feedthebeast.virtualchest.blocks.tile.TileEntityVirtualInventory;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -35,6 +39,27 @@ public class BlockVirtualInventoryChest extends BlockVirtualInventory {
 	{
 		return 22;
 	}
+	
+	public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
+    {
+        if (par1World.isRemote)
+        {
+            return true;
+        }
+        else
+        {
+        	TileEntityVirtualInventory inv= (TileEntityVirtualInventory)par1World.getBlockTileEntity(par2, par3, par4);
+        	//inv.SetPlayer(par5EntityPlayer.username);
+            IInventory iinventory = inv.GetInventory("Team-"+TeamMod.instance.teamHandler.getPlayerTeam(par5EntityPlayer.username));
+
+            if (this.canGetInventory(par1World, par2, par3, par4))
+            {
+                par5EntityPlayer.displayGUIChest(iinventory);
+            }
+
+            return true;
+        }
+    }
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
 	{
 		
