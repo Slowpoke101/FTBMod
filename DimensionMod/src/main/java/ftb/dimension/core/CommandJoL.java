@@ -1,11 +1,12 @@
 package ftb.dimension.core;
 
-import com.feedthebeast.TeamMod;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import com.feedthebeast.TeamMod;
+
 import ftb.dimension.DimensionMod;
 
 public class CommandJoL extends CommandBase

@@ -3,8 +3,6 @@ package ftb.dimension.items;
 import java.util.List;
 import java.util.Random;
 
-import com.feedthebeast.TeamMod;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
@@ -17,6 +15,9 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import com.feedthebeast.TeamMod;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ftb.dimension.DimensionMod;
@@ -232,6 +233,7 @@ public class BlockPortalFTB extends BlockBreakable
     @SideOnly(Side.CLIENT)
     public int getRenderBlockPass()
     {
+    	
         return 1;
     }
 
