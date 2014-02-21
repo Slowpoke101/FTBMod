@@ -34,7 +34,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	@Override
 	public void validate() {
 		super.validate();
-		currentData=InventoryManager.getChest(currentPlayer, getWorldObj(), inventorySize);
+		currentData=InventoryManager.getInstance().getChest(currentPlayer, getWorldObj(), inventorySize);
 	}
 
 
@@ -50,27 +50,27 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	public void SetPlayer(String player)
 	{
 		currentPlayer=player;
-		currentData=InventoryManager.getChest(currentPlayer,getWorldObj(),inventorySize);
+		currentData=InventoryManager.getInstance().getChest(currentPlayer,getWorldObj(),inventorySize);
 	}
 	
 	@LuaCallable( description="Setting current team inventory")
 	public void setTeam(IComputerAccess computer,@Arg(type = LuaType.NUMBER,name="team") int team)
 	{
 		currentPlayer="Team-"+team;
-		currentData=InventoryManager.getChest(currentPlayer,getWorldObj(),inventorySize);
+		currentData=InventoryManager.getInstance().getChest(currentPlayer,getWorldObj(),inventorySize);
 	}
 	
 	@LuaCallable( description="Setting current team inventory")
 	public void setTeamByPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
 	{
 		currentPlayer="Team-"+TeamMod.instance.teamHandler.getPlayerTeam(player);
-		currentData=InventoryManager.getChest(currentPlayer,getWorldObj(),inventorySize);
+		currentData=InventoryManager.getInstance().getChest(currentPlayer,getWorldObj(),inventorySize);
 	}
 	@LuaCallable( description="Setting current player inventory")
 	public void setPlayer(IComputerAccess computer,@Arg(type = LuaType.STRING,name="player") String player)
 	{
 		currentPlayer=player;
-		currentData=InventoryManager.getChest(currentPlayer,getWorldObj(),inventorySize);
+		currentData=InventoryManager.getInstance().getChest(currentPlayer,getWorldObj(),inventorySize);
 	}
 	
 	public void onInventoryChanged(ChestInventory inv) {
@@ -149,7 +149,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	@LuaCallable(returnTypes={LuaType.TABLE},description="Gets inventory list")
 	public Object getInventoryList(IComputerAccess computer) {
 		HashMap<Double,String> pList=new HashMap<Double, String>();
-		return InventoryManager.getInventories();
+		return InventoryManager.getInstance().getInventories();
 	}
 
 	@Override
@@ -200,7 +200,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 
 
 	public IInventory GetInventory(String string) {
-		VirtualChestData inv=InventoryManager.getChest(string,getWorldObj(),inventorySize);
+		VirtualChestData inv=InventoryManager.getInstance().getChest(string,getWorldObj(),inventorySize);
 		inv.AddVirtualBlock(this);
 		return inv.inventory;
 	}

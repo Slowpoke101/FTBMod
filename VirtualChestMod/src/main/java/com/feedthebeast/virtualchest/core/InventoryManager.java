@@ -4,15 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent;
 
 public class InventoryManager {
 
+	private static InventoryManager instance;
 	
-	private static Map<String, VirtualChestData> inventories=new HashMap<String, VirtualChestData>();
+	public static InventoryManager getInstance()
+	{
+		if(instance==null)
+			instance=new InventoryManager();
+		return instance;
+	}
+	
+	private  Map<String, VirtualChestData> inventories=new HashMap<String, VirtualChestData>();
 	
 	
 	
-	public static VirtualChestData getChest(String name,World world,int size)
+	public  VirtualChestData getChest(String name,World world,int size)
 	{
 		if(inventories.containsKey(name))
 		{
@@ -29,8 +39,14 @@ public class InventoryManager {
 
 
 
-	public static Object getInventories() {
+	public  Object getInventories() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+
+	public void ClearInventories()
+	{
+		inventories.clear();
 	}
 }

@@ -5,7 +5,11 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.item.Item;
+import net.minecraft.world.WorldProviderEnd;
+import net.minecraft.world.WorldProviderHell;
+import net.minecraft.world.WorldProviderSurface;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.DimensionManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -18,6 +22,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import ftb.dimension.core.CommandJoL;
 import ftb.dimension.core.CommonProxy;
+import ftb.dimension.core.DimensionFTB;
 import ftb.dimension.core.WorldHandler;
 import ftb.dimension.items.BlockPortalFTB;
 import ftb.dimension.items.ItemKey;
@@ -38,7 +43,7 @@ public class DimensionMod
 	public static Block portalBlock;
 	public static int portalBlockID;
 	
-	public HashMap<String, Integer> dimensions = new HashMap<String, Integer>();
+	public HashMap<Integer, DimensionFTB> dimensions = new HashMap<Integer, DimensionFTB>();
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -55,13 +60,26 @@ public class DimensionMod
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		LanguageRegistry.addName(key, "Portal Key");
+		LanguageRegistry.addName(key, "Portal Key");        
 	}
 	
 	@EventHandler
 	public void serverStarted(FMLServerStartedEvent event)
 	{
 		GameRegistry.registerPlayerTracker(new WorldHandler());
+		if(DimensionManager.getWorlds().length < 4)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				DimensionManager.registerProviderType(2 + (i * 3), WorldProviderSurface.class, false);
+				DimensionManager.registerDimension(2 + (i * 3), 2 + (i * 3));
+				DimensionManager.registerProviderType(3 + (i * 3), WorldProviderHell.class, false);
+				DimensionManager.registerDimension(3 + (i * 3), 3 + (i * 3));
+				DimensionManager.registerProviderType(4 + (i * 3), WorldProviderEnd.class, false);
+				DimensionManager.registerDimension(4 + (i * 3), 4 + (i * 3));
+				dimensions.put(i, new DimensionFTB(2 + (i * 3), 3 + (i * 3), 4 + (i * 3)));
+			}
+		}
 	}
 
 	@EventHandler
