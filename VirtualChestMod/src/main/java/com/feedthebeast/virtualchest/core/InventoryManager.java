@@ -3,7 +3,9 @@ package com.feedthebeast.virtualchest.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 
@@ -22,8 +24,10 @@ public class InventoryManager {
 	
 	
 	
-	public  VirtualChestData getChest(String name,World world,int size)
+	public  VirtualChestData getChest(String name,int size)
 	{
+		World world=DimensionManager.getWorld(0);
+		MinecraftServer.getServer().getFolderName();
 		if(inventories.containsKey(name))
 		{
 			return inventories.get(name);
@@ -44,7 +48,17 @@ public class InventoryManager {
 		return null;
 	}
 	
+	@ForgeSubscribe
+	public void OnWorldSave(WorldEvent.Save event)
+	{
+		
+	}
 
+	@ForgeSubscribe
+	public void OnWorldLoad(WorldEvent.Load event)
+	{
+		
+	}
 	public void ClearInventories()
 	{
 		inventories.clear();

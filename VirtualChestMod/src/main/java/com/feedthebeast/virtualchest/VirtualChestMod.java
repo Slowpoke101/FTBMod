@@ -44,6 +44,7 @@ public class VirtualChestMod {
 		ModBlocks.InitBlocks();
 		
 		proxy.RegisterRenderers();
+		//MinecraftForge.EVENT_BUS.register(InventoryManager.getInstance());
 	}
 	
 	@EventHandler
@@ -54,11 +55,12 @@ public class VirtualChestMod {
 	@EventHandler
 	public void onServerStopped(FMLServerStoppedEvent event) 
 	{
-		
+		InventoryManager.getInstance().ClearInventories();
+		System.out.println("Stopping Server");
 	}
 	@EventHandler
 	public void Init(FMLInitializationEvent event)
 	{
-		InventoryManager.getInstance().ClearInventories();
+		
 	}
 }
