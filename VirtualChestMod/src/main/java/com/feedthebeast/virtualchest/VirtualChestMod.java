@@ -3,8 +3,11 @@ package com.feedthebeast.virtualchest;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
+
 import com.feedthebeast.virtualchest.blocks.ModBlocks;
 import com.feedthebeast.virtualchest.core.CommonProxy;
+import com.feedthebeast.virtualchest.core.InventoryManager;
 
 import com.feedthebeast.virtualchest.lib.LibMisc;
 
@@ -40,6 +43,7 @@ public class VirtualChestMod {
 		ModBlocks.InitBlocks();
 		
 		proxy.RegisterRenderers();
+		MinecraftForge.EVENT_BUS.register(InventoryManager.getInstance());
 	}
 	
 	@EventHandler
