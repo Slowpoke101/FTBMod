@@ -85,20 +85,11 @@ public class TeamMod
 		teamHandler = new TeamHandler();
 		NBTTagCompound nbt = null;
 		MinecraftServer server = event.getServer();
-		String folderName = "saves";
-		if (server instanceof DedicatedServer)
-		{
-			folderName = ((DedicatedServer) server).getStringProperty("level-name", "world");
-		}
-		else
-		{
-			folderName = "saves/"+DimensionManager.getCurrentSaveRootDirectory().getName();
-		}
 
-		teamFile = new File(folderName + "/teams.dat");
+		teamFile = new File(DimensionManager.getCurrentSaveRootDirectory(), "teams.dat");
 		if (!teamFile.exists())
 		{
-			modLog.log(Level.INFO, "Creating Teams File for "+folderName);
+			modLog.log(Level.INFO, "Creating Teams File");
 			try
 			{
 				teamFile.createNewFile();
