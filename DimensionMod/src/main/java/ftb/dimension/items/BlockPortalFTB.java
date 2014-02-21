@@ -3,6 +3,8 @@ package ftb.dimension.items;
 import java.util.List;
 import java.util.Random;
 
+import com.feedthebeast.TeamMod;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
@@ -223,7 +225,7 @@ public class BlockPortalFTB extends BlockBreakable
         if (par5Entity.ridingEntity == null && par5Entity.riddenByEntity == null && par5Entity instanceof EntityPlayerMP)
         {
         	EntityPlayerMP player = (EntityPlayerMP)par5Entity;
-    		player.travelToDimension(DimensionMod.instance.dimensions.get(player.username));
+    		player.travelToDimension(DimensionMod.instance.dimensions.get(TeamMod.instance.teamHandler.getPlayerTeam(player.username)).teamNether);
         }
     }
 

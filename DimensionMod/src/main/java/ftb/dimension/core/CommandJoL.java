@@ -1,5 +1,7 @@
 package ftb.dimension.core;
 
+import com.feedthebeast.TeamMod;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +29,7 @@ public class CommandJoL extends CommandBase
 		if(s.matches("tele"))
 		{
 			EntityPlayerMP player = (EntityPlayerMP)sender;
-			player.travelToDimension(DimensionMod.instance.dimensions.get(player.username));
+			player.travelToDimension(DimensionMod.instance.dimensions.get(TeamMod.instance.teamHandler.getPlayerTeam(player.username)).teamOverworld);
 		}
 		else
 		{
@@ -39,7 +41,6 @@ public class CommandJoL extends CommandBase
 			player.worldObj.setBlock((int)player.posX, (int)player.posY + 1, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
 			player.worldObj.setBlock((int)player.posX + 1, (int)player.posY + 2, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
 			player.worldObj.setBlock((int)player.posX, (int)player.posY + 2, (int)player.posZ, DimensionMod.portalBlock.blockID, i, 2);
-
 		}
  	}
 
