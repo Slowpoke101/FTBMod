@@ -44,8 +44,8 @@ public class InventoryManager {
 		return null;
 	}
 	
-	@ForgeSubscribe
-	public void OnWorldUnload(WorldEvent.Unload event)
+
+	public void ClearInventories()
 	{
 		inventories.clear();
 	}

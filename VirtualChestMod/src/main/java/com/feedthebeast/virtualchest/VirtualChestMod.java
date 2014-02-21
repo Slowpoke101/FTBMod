@@ -19,6 +19,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStoppedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(modid=LibMisc.MODID,name=LibMisc.MODNAME,version=LibMisc.VERSION)
@@ -43,7 +44,6 @@ public class VirtualChestMod {
 		ModBlocks.InitBlocks();
 		
 		proxy.RegisterRenderers();
-		MinecraftForge.EVENT_BUS.register(InventoryManager.getInstance());
 	}
 	
 	@EventHandler
@@ -51,10 +51,14 @@ public class VirtualChestMod {
 	{
 
 	}
-	
+	@EventHandler
+	public void onServerStopped(FMLServerStoppedEvent event) 
+	{
+		
+	}
 	@EventHandler
 	public void Init(FMLInitializationEvent event)
 	{
-
+		InventoryManager.getInstance().ClearInventories();
 	}
 }
