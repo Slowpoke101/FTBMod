@@ -35,6 +35,14 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	public void validate() {
 		super.validate();
 		currentData=InventoryManager.getInstance().getChest(currentPlayer,  inventorySize);
+		InventoryManager.getInstance().RegisterChest(this);
+	}
+
+
+	@Override
+	public void invalidate() {
+		super.invalidate();
+		InventoryManager.getInstance().DeRegisterChest(this);
 	}
 
 
@@ -89,7 +97,7 @@ public class TileEntityVirtualInventory extends TileEntity implements IInventory
 	
 	public int inventorySize=36;
 	public String currentPlayer="Team--1";
-	private VirtualChestData currentData;
+	public VirtualChestData currentData;
 	
 	@Override
 	public int getSizeInventory() {

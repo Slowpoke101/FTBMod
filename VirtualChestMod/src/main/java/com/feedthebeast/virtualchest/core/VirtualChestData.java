@@ -24,7 +24,7 @@ public class VirtualChestData extends WorldSavedData {
 	public void Initialize(int size)
 	{
 		inventorySize=size;
-		inventory=new ChestInventory(size,this, this.mapName);
+		inventory=new ChestInventory(size, this.mapName);
 	}
 	public void onInventoryChanged(ChestInventory chest)
 	{
@@ -47,7 +47,7 @@ public class VirtualChestData extends WorldSavedData {
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		 String name=nbttagcompound.getString(TAG_INVENTORYNAME);
-         ChestInventory inv=new ChestInventory(inventorySize,this, name);
+         ChestInventory inv=new ChestInventory(inventorySize, name);
          inv.readFromNBT(nbttagcompound.getCompoundTag(TAG_INVENTORY));
          inventory=inv;
 

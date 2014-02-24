@@ -10,12 +10,10 @@ import net.minecraft.nbt.NBTTagList;
 public class ChestInventory implements IInventory {
 	private ItemStack[] chestContents;
 	public int size;
-	public VirtualChestData parent;
 	public String PlayerName;
-	public ChestInventory(int size,VirtualChestData parent,String Name)
+	public ChestInventory(int size,String Name)
 	{
 		this.size=size;
-		this.parent=(VirtualChestData) parent;
 		this.PlayerName=Name;
 		chestContents=new ItemStack[size];
 	}
@@ -40,7 +38,7 @@ public class ChestInventory implements IInventory {
             {
                 itemstack = this.chestContents[par1];
                 this.chestContents[par1] = null;
-                parent.onInventoryChanged(this);
+                InventoryManager.getInstance().onInventoryChanged(this);
                 return itemstack;
             }
             else
@@ -52,7 +50,7 @@ public class ChestInventory implements IInventory {
                     this.chestContents[par1] = null;
                 }
 
-                parent.onInventoryChanged(this);
+                InventoryManager.getInstance().onInventoryChanged(this);
                 return itemstack;
             }
         }
@@ -85,7 +83,7 @@ public class ChestInventory implements IInventory {
 	            par2ItemStack.stackSize = this.getInventoryStackLimit();
 	        }
 
-	        parent.onInventoryChanged(this);
+	        InventoryManager.getInstance().onInventoryChanged(this);
 
 	}
 
@@ -117,12 +115,12 @@ public class ChestInventory implements IInventory {
 
 	@Override
 	public void openChest() {
-		((VirtualChestData)parent).openChest();
+		InventoryManager.getInstance().openChest(this);
 	}
 
 	@Override
 	public void closeChest() {
-		((VirtualChestData)parent).closeChest();
+		InventoryManager.getInstance().closeChest(this);
 	}
 
 	@Override
