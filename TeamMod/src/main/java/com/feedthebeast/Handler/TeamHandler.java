@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import com.feedthebeast.TeamMod;
 import com.feedthebeast.Network.PacketTypeHandler;
 import com.feedthebeast.Network.Packets.PacketTeam;
+import com.feedthebeast.TileEntitys.TileEntityTeamPeripheral;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
+import dan200.computer.api.IComputerAccess;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,6 +58,11 @@ public class TeamHandler
 		if (id==getPlayerTeam(playerName))
 		{
 			return;
+		}
+		
+		for (IComputerAccess c:TileEntityTeamPeripheral.attachedComputers)
+		{
+			c.queueEvent("team_change", new Object[]{playerName,TeamMod.instance.teamHandler.getPlayerTeam(playerName),id});
 		}
 		
 		if (TeamMod.instance.teamHandler.getPlayerTeam(playerName)!=-1)

@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 {
-	HashSet<IComputerAccess> attachedComputers = new HashSet<IComputerAccess>();
+	public static HashSet<IComputerAccess> attachedComputers = new HashSet<IComputerAccess>();
 	@Override
 	public String getType()
 	{
@@ -87,7 +87,7 @@ public class TileEntityTeamPeripheral extends TileEntity implements IPeripheral
 
 	@Override
 	public boolean canAttachToSide(int side)
-	{
+	{	
 		return true;
 	}
 
