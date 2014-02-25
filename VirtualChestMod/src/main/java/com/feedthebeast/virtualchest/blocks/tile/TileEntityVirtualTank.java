@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.feedthebeast.virtualchest.core.VirtualTankData;
 import com.google.common.collect.Lists;
 
 import openperipheral.api.Arg;
@@ -25,54 +26,31 @@ import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
 public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,IAttachable{
-	protected FluidTank tank = new FluidTank(Integer.MAX_VALUE);
-	public Map<Fluid, FluidTank> fluids=new HashMap<Fluid, FluidTank>();
-	public Map<Fluid,Double> caps=new HashMap<Fluid, Double>();
-	public Map<Fluid,Double> changes=new HashMap<Fluid, Double>();
-	public Map<Fluid,Double> intervals=new HashMap<Fluid, Double>();
 	private List<IComputerAccess> computers = Lists.newArrayList();
-	protected FluidTank currentTank;
-
+	private VirtualTankData tankData;
 	public TileEntityVirtualTank()
 	{
-		currentTank=tank;
 	}
-	public static String TAG_TANKS="Tanks";
+
 	@Override
 	public void readFromNBT(NBTTagCompound par1nbtTagCompound) {
 		super.readFromNBT(par1nbtTagCompound);
-		NBTTagList list=par1nbtTagCompound.getTagList(TAG_TANKS);
-		for(int i=0;i<list.tagCount();i++)
-		{
-			NBTTagCompound cmp=(NBTTagCompound) list.tagAt(i);
-			FluidTank tnk=new FluidTank(Integer.MAX_VALUE);
-			tnk.readFromNBT(cmp);
-			fluids.put(tnk.getFluid().getFluid(), tnk);
-		}
-		tank.readFromNBT(par1nbtTagCompound);
+		
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound par1nbtTagCompound) {
 		super.writeToNBT(par1nbtTagCompound);
-		NBTTagList list=new NBTTagList();
-		for(FluidTank tnk:fluids.values())
-		{
-			NBTTagCompound cmp=new NBTTagCompound();
-			tnk.writeToNBT(cmp);
-			list.appendTag(cmp);
-		}
-		par1nbtTagCompound.setTag(TAG_TANKS, list);
-		tank.writeToNBT(par1nbtTagCompound);
+		
 	}
 
 	public FluidTank GetTank(Fluid fluid)
 	{
-		if(!fluids.containsKey(fluid))
+		if(!tankData.fluids.containsKey(fluid))
 		{
-			fluids.put(fluid, new FluidTank(Integer.MAX_VALUE));
+			tankData.fluids.put(fluid, new FluidTank(Integer.MAX_VALUE));
 		}
-		return fluids.get(fluid);
+		return tankData.fluids.get(fluid);
 	}
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
@@ -81,27 +59,27 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 		
 		
 		int accepted=tank.fill(resource, doFill);
-		if(intervals.containsKey(fluid) && doFill)
+		if(tankData.intervals.containsKey(fluid) && doFill)
 		{
-			if(!changes.containsKey(fluid))
-				changes.put(fluid, (double)accepted);
+			if(!tankData.changes.containsKey(fluid))
+				tankData.changes.put(fluid, (double)accepted);
 			else
 			{
-				changes.put(fluid, changes.get(fluid)+accepted);
+				tankData.changes.put(fluid, tankData.changes.get(fluid)+accepted);
 			}
-			double change=changes.get(fluid);
-			if(change>=intervals.get(fluid))
+			double change=tankData.changes.get(fluid);
+			if(change>=tankData.intervals.get(fluid))
 			{
-				changes.put(fluid,0D);
+				tankData.changes.put(fluid,0D);
 				for(IComputerAccess computer:computers)
 				computer.queueEvent("fluid_interval", new Object[]{fluid.getUnlocalizedName(),change,tank.getFluidAmount()});
 			}
 		}
-		if(caps.containsKey(fluid) && accepted >0 && doFill)
+		if(tankData.caps.containsKey(fluid) && accepted >0 && doFill)
 		{
-			if(tank.getFluidAmount()>caps.get(fluid))
+			if(tank.getFluidAmount()>tankData.caps.get(fluid))
 			{
-				caps.put(fluid, (double)Integer.MAX_VALUE);
+				tankData.caps.put(fluid, (double)Integer.MAX_VALUE);
 				for(IComputerAccess computer:computers)
 					computer.queueEvent("fluid_cap", new Object[]{fluid.getUnlocalizedName(),tank.getFluidAmount()});
 			}
@@ -112,16 +90,16 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource,
 			boolean doDrain) {
-		if (resource == null || !resource.isFluidEqual(tank.getFluid()))
+		if (resource == null || !resource.isFluidEqual(tankData.tank.getFluid()))
 		{
 			return null;
 		}
-		return tank.drain(resource.amount, doDrain);
+		return tankData.tank.drain(resource.amount, doDrain);
 	}
 
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
-		return tank.drain(maxDrain, doDrain);
+		return tankData.tank.drain(maxDrain, doDrain);
 	}
 
 	@Override
@@ -136,9 +114,9 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
-		FluidTankInfo[] tanks=new FluidTankInfo[fluids.size()];
+		FluidTankInfo[] tanks=new FluidTankInfo[tankData.fluids.size()];
 		int i=0;
-		for(FluidTank tank :fluids.values())
+		for(FluidTank tank :tankData.fluids.values())
 		{
 			tanks[i++]=tank.getInfo();
 		}
@@ -150,7 +128,7 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 	{
 		HashMap<String, Double> retval=new HashMap<String, Double>();
 		int i=1;
-		for(FluidTank tank :fluids.values())
+		for(FluidTank tank :tankData.fluids.values())
 		{
 			retval.put(tank.getFluid().getFluid().getUnlocalizedName(), (double) i++);
 		}
@@ -162,7 +140,7 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 	{
 		HashMap<String, Double> retval=new HashMap<String, Double>();
 		int i=1;
-		for(FluidTank tank :fluids.values())
+		for(FluidTank tank :tankData.fluids.values())
 		{
 			retval.put(tank.getFluid().getFluid().getUnlocalizedName(), (double) tank.getFluidAmount());
 		}
@@ -176,7 +154,7 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 		if(fluid==null)
 			return;
 		FluidTank tank=GetTank(fluid);
-		caps.put(fluid, amount);
+		tankData.caps.put(fluid, amount);
 	}
 	
 	
@@ -187,8 +165,8 @@ public class TileEntityVirtualTank extends TileEntity implements IFluidHandler,I
 		if(fluid==null)
 			return;
 		FluidTank tank=GetTank(fluid);
-		intervals.put(fluid, amount);
-		changes.put(fluid, 0D);
+		tankData.intervals.put(fluid, amount);
+		tankData.changes.put(fluid, 0D);
 	}
 	// UNSTAGED CHANGE
 	@Override
