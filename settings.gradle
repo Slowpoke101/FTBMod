@@ -1,2 +1,2 @@
-include 'VirtualChestMod','TeamMod','DimensionMod'
+include 'VirtualChestMod','DimensionMod'
 rootProject.name = 'FTBMods'
